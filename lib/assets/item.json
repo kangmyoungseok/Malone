@@ -1,0 +1,139 @@
+{
+    "datas" : [
+        { 
+            "category" : "bread",
+            "name" : "빵류",
+            "img" : "bread.png",
+            "items" : [
+                {"name" : "베이글", "img" : "bagle.png"},
+                {"name" : "바게트","img":"baguette.png"},
+                {"name" : "크로아상", "img" : "croissant.png"},
+                {"name" : "식빵","img":"plain bread.png"},
+                {"name" : "샌드위치", "img" : "sandwich.png"},
+                {"name" : "쿠키", "img" : "cookie.png"}]
+        },
+        { 
+            "category" : "condiments",
+            "name" : "조미료",
+            "img" : "condiments.png",
+            "items" : [
+                {"name" : "고추장", "img" : "gochujang.png"},
+                {"name" : "꿀","img":"honey.png"},
+                {"name" : "핫소스", "img" : "hot sauce.png"},
+                {"name" : "케첩","img":"ketchup.png"},
+                {"name" : "마요네즈", "img" : "mayonnaise.png"},
+                {"name" : "올리브 오일", "img" : "olive-oil.png"},
+                {"name" : "후추","img":"pepper.png"},
+                {"name" : "소금", "img" : "salt.png"},
+                {"name" : "머스타드", "img" : "mustard.png"}]
+        },
+        { 
+            "category" : "dairy",
+            "name" : "유제품",
+            "img" : "dairy-products.png",
+            "items" : [
+                {"name" : "아몬드우유", "img" : "almond milk.png"},
+                {"name" : "버블티","img":"bubble-tea.png"},
+                {"name" : "버터", "img" : "butter.png"},
+                {"name" : "치즈","img":"cheese.png"},
+                {"name" : "우유", "img" : "milk.png"},
+                {"name" : "리코타", "img" : "ricotta.png"},
+                {"name" : "사워크림", "img" : "sour-cream.png"},
+                {"name" : "두유","img":"soy-milk.png"},
+                {"name" : "요거트", "img" : "yoghurt.png"}
+            ]
+        },
+        { 
+            "category" : "desserts",
+            "name" : "디저트",
+            "img" : "desserts.png",
+            "items" : [
+                {"name" : "바클라바", "img" : "baklava.png"},
+                {"name" : "비스킷","img":"biscuit.png"},
+                {"name" : "브라우니", "img" : "brownie.png"},
+                {"name" : "케이크","img":"cake.png"},
+                {"name" : "카라멜", "img" : "caramel.png"},
+                {"name" : "껌", "img" : "chewing-gum.png"},
+                {"name" : "초콜릿", "img" : "chocolate-bar.png"},
+                {"name" : "츄러스", "img" : "churros.png"},
+                {"name" : "사탕", "img" : "cnady.png"},
+                {"name" : "크래커", "img" : "cracker.png"},
+                {"name" : "컵케이크","img":"cupcake.png"},
+                {"name" : "에그타르트","img":"egg-tart.png"},
+                {"name" : "에너지바", "img" : "energy-bar.png"}
+            ]
+        },
+        { 
+            "category" : "dishes",
+            "name" : "요리",
+            "img" : "dish.png",
+            "items" : [
+                {"name" : "국", "img" : "broth.png"},
+                {"name" : "부리또","img":"burrito.png"},
+                {"name" : "통조림", "img" : "canned-food.png"},
+                {"name" : "시리얼","img":"cereals.png"},
+                {"name" : "치킨", "img" : "chicken-leg.png"},
+                {"name" : "카레", "img" : "curry.png"},
+                {"name" : "만두", "img" : "dumpling.png"},
+                {"name" : "새우튀김","img":"fried-shrimp.png"},
+                {"name" : "햄버거","img":"hamburger.png"},
+                {"name" : "라면", "img" : "instant-noodles.png"},
+                {"name" : "김치", "img" : "kimchi.png"},
+                {"name" : "밥", "img" : "rice.png"},
+                {"name" : "소세지","img":"sausage.png"},
+                {"name" : "참치","img":"tuna.png"}
+            ]
+        },
+        { 
+            "category" : "drink",
+            "name" : "음료",
+            "img" : "drink.png",
+            "items" : [
+                {"name" : "사과주스", "img" : "apple-juice.png"},
+                {"name" : "캐모마일차","img":"chamomile.png"},
+                {"name" : "코코넛워터", "img" : "coconut-water.png"},
+                {"name" : "커피","img":"coffee-cup.png"},
+                {"name" : "콜라", "img" : "coke.png"},
+                {"name" : "에너지음료", "img" : "energy-drink.png"},
+                {"name" : "녹차", "img" : "green-tea.png"},
+                {"name" : "차","img":"hot-tea.png"},
+                {"name" : "오렌지주스", "img" : "orange-juice.png"}
+            ]
+        },
+        { 
+            "category" : "etc",
+            "name" : "기타",
+            "img" : "etc.png",
+            "items" : [
+                {"name" : "맥주", "img" : "beer.png"},
+                {"name" : "브로콜리","img":"broccoli.png"},
+                {"name" : "마늘", "img" : "garlic.png"},
+                {"name" : "대파","img":"green-onion.png"},
+                {"name" : "양파", "img" : "onion.png"},
+                {"name" : "단백질", "img" : "protein.png"},
+                {"name" : "쌀", "img" : "rice.png"},
+                {"name" : "소주","img":"soju.png"}
+            ]
+        },
+        { 
+            "category" : "fruits",
+            "name" : "과일",
+            "img" : "fruits.png",
+            "items" : [
+                {"name" : "사과", "img" : "apple.png"},
+                {"name" : "아보카도","img":"avocado.png"},
+                {"name" : "바나나", "img" : "banana.png"},
+                {"name" : "블루베리","img":"blueberries.png"},
+                {"name" : "체리", "img" : "cherries.png"},
+                {"name" : "포도", "img" : "grape.png"},
+                {"name" : "키위", "img" : "kiwi.png"},
+                {"name" : "레몬", "img" : "lemons.png"},
+                {"name" : "복숭아", "img" : "peach.png"},
+                {"name" : "배", "img" : "pear.png"},
+                {"name" : "토마토", "img" : "tomato.png"},
+                {"name" : "수박","img":"watermelon.png"}
+            ]
+        }
+
+    ]
+}
