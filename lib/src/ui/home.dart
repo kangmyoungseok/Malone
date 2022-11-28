@@ -8,7 +8,60 @@ import 'package:term_proj2/src/ui/search_page.dart';
 import 'package:term_proj2/src/ui/shopping_list_page.dart';
 import 'package:term_proj2/src/ui/test_page.dart';
 
+import 'add_item_page.dart';
 import 'category_page.dart';
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int screenIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      screenIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> _widgetOptions = <Widget>[
+      Home(),
+      const AddItemPage(),
+      const ShoppingListPage(),
+    ];
+
+    return Scaffold(
+      body: _widgetOptions.elementAt(screenIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        // backgroundColor: Colors.black,
+        currentIndex: screenIndex,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined,
+                  color: AppColor.onPrimaryColor // Colors.blue,
+                  ),
+              label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_box_outlined,
+                  color: AppColor.onPrimaryColor // Colors.blue,
+                  ),
+              label: 'addItem'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined,
+                  color: AppColor.onPrimaryColor // Colors.blue,
+                  ),
+              label: 'list'),
+        ],
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -39,7 +92,6 @@ class _HomeState extends State<Home> {
     _refrigeratedItemList = _refrigeratedProvider.itemList;
   }
 
-
   int current = 0;
 
   @override
@@ -59,36 +111,43 @@ class _HomeState extends State<Home> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            Navigator.push(context,MaterialPageRoute(builder: (context)=> CategoryPage()));
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CategoryPage()));
           },
           child: const Icon(Icons.add),
           backgroundColor: AppColor.onPrimaryColor,
         ),
-
       ),
     );
   }
 
   PreferredSize _appBar() {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(126),
+      preferredSize: const Size.fromHeight(146),
       child: Padding(
         padding: const EdgeInsets.only(top: 35, left: 10, right: 10),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          decoration: _boxDecoration(),
-          child: SafeArea(
-            child: Column(
-              children: [
-                _topBar(),
-                const SizedBox(height: 15),
-                //_searchBox(),
-                //const SizedBox(height: 19),
-                _tabBar(),
-              ],
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: _boxDecoration(),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    _topBar(),
+                    const SizedBox(height: 15),
+                    //_searchBox(),
+                    //const SizedBox(height: 19),
+                    _tabBar(),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -128,7 +187,8 @@ class _HomeState extends State<Home> {
               ),
               onTap: () {
                 print("search 클릭");
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>SearchPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SearchPage()));
               },
             ),
             const SizedBox(
@@ -140,7 +200,10 @@ class _HomeState extends State<Home> {
                 color: AppColor.onPrimaryColor,
               ),
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>ShoppingListPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShoppingListPage()));
                 print("장바구니 클릭");
               },
             ),
@@ -154,7 +217,8 @@ class _HomeState extends State<Home> {
               ),
               onTap: () {
                 print("설정 클릭");
-                Navigator.push(context,MaterialPageRoute(builder: (context)=>TestPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => TestPage()));
               },
             ),
           ],
@@ -162,7 +226,6 @@ class _HomeState extends State<Home> {
       ],
     );
   }
-
 
   Widget _tabBar() {
     return TabBar(
@@ -188,14 +251,15 @@ class _HomeState extends State<Home> {
               borderRadius: current == 0
                   ? BorderRadius.circular(15)
                   : BorderRadius.circular(30),
-              border: current == 0
-                  ? null
-                  : null,
+              border: current == 0 ? null : null,
             ),
-            child: current==0
-                  ? const Center(child: Text("냉장",style: TextStyle(fontSize: 16),))
-                  : const Center(child: Icon(Icons.dns_rounded))
-        ,
+            child: current == 0
+                ? const Center(
+                    child: Text(
+                    "냉장",
+                    style: TextStyle(fontSize: 16),
+                  ))
+                : const Center(child: Icon(Icons.dns_rounded)),
           ),
         ),
         Tab(
@@ -209,14 +273,15 @@ class _HomeState extends State<Home> {
               borderRadius: current == 1
                   ? BorderRadius.circular(15)
                   : BorderRadius.circular(30),
-              border: current == 1
-                  ? null
-                  : null,
+              border: current == 1 ? null : null,
             ),
-            child: current==1
-                ? const Center(child: Text("냉동",style: TextStyle(fontSize: 16),))
-                : const Center(child: Icon(Icons.ac_unit_rounded))
-            ,
+            child: current == 1
+                ? const Center(
+                    child: Text(
+                    "냉동",
+                    style: TextStyle(fontSize: 16),
+                  ))
+                : const Center(child: Icon(Icons.ac_unit_rounded)),
           ),
         ),
         Tab(
@@ -230,14 +295,15 @@ class _HomeState extends State<Home> {
               borderRadius: current == 2
                   ? BorderRadius.circular(15)
                   : BorderRadius.circular(30),
-              border: current == 2
-                  ? null
-                  : null,
+              border: current == 2 ? null : null,
             ),
-            child: current==2
-                ? Center(child: const Text("실온",style: TextStyle(fontSize: 16),))
-                : Center(child: Icon(Icons.eco_rounded))
-            ,
+            child: current == 2
+                ? Center(
+                    child: const Text(
+                    "실온",
+                    style: TextStyle(fontSize: 16),
+                  ))
+                : Center(child: Icon(Icons.eco_rounded)),
           ),
         ),
       ],

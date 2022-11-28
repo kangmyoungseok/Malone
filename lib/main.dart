@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       return const Text("Error!!");
     } else if (snapshot.hasData) {
       _initializeProvider(context);
-      return Home();
+      return const MainPage();
     } else {
       return const IntroScreen();
     }
