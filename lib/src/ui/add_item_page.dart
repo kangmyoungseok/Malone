@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../model/item.dart';
+import '../provider/controller_provider.dart';
 import 'home.dart';
 import '../styles.dart';
 
@@ -130,7 +132,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
                           selectedStorage = selectedItem;
-                          newItem.storageCategory = storages[selectedItem];
+                          // newItem.storageCategory = storages[selectedItem];
                         });
                       },
                       children:
@@ -549,7 +551,23 @@ class _AddItemPageState extends State<AddItemPage> {
                     });
                   }
 
+                  if (selectedStorage == 0) {
+                    newItem.storageCategory = "냉장고";
+                    newItem.storageSubCategory = "냉장";
+                  } else if (selectedStorage == 1) {
+                    newItem.storageCategory = "냉장고";
+                    newItem.storageSubCategory = "냉동";
+                  } else if (selectedStorage == 2) {
+                    newItem.storageCategory = "냉장고";
+                    newItem.storageSubCategory = "실온";
+                  } else {
+                    setState(() {
+                      newItem.storageCategory = storages[selectedStorage];
+                    });
+                  }
+
                   print(newItem.storageCategory);
+                  print(newItem.storageSubCategory);
                   print(newItem.itemCategory);
                   print(newItem.name);
                   print(newItem.enrollDate);
@@ -558,11 +576,17 @@ class _AddItemPageState extends State<AddItemPage> {
                   print(newItem.count);
                   print(newItem.memo);
 
-                  /* newItem을 데이터 전송 */
+                  /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
+                  /*
+                  ControllerProvider _controller =
+                      Provider.of<ControllerProvider>(context, listen: false);
+                  _controller.insertItem(newItem);
+                  */
+
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => MainPage()),
+                          builder: (BuildContext context) => const MainPage()),
                       (route) => false);
                 },
                 child: const Text("등록하기"),

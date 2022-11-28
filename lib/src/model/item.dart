@@ -10,7 +10,8 @@ class Item {
   String? notificationDate; // 며칠전에 알람 받을지
   int count; // 수량
   String memo; // 메모
-  String storageCategory; // 보관장소 -> 냉장,냉동,실온
+  String storageCategory;
+  String? storageSubCategory; // 보관장소 -> 냉장,냉동,실온
 
   Item({
     required this.itemCategory,
@@ -21,5 +22,6 @@ class Item {
     required this.memo,
     /*required*/ this.notificationDate,
     required this.storageCategory,
+    this.storageSubCategory,
   });
 }
