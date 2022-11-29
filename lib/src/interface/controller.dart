@@ -14,8 +14,7 @@ class Controller {
     print("initController");
     _frozenProvider = Provider.of<FrozenProvider>(context, listen: false);
     _normalProvider = Provider.of<NormalProvider>(context, listen: false);
-    _refrigeratedProvider =
-        Provider.of<RefrigeratedProvider>(context, listen: false);
+    _refrigeratedProvider = Provider.of<RefrigeratedProvider>(context, listen: false);
     print("initController finish");
   }
 

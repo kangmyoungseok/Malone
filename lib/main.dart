@@ -5,6 +5,7 @@ import 'package:term_proj2/src/provider/controller_provider.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
 import 'package:term_proj2/src/provider/refrigerated_provider.dart';
+import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/home.dart';
 import 'package:term_proj2/src/ui/intro_screen.dart';
 
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   _futureFunc() async {
     // 초기화 해야 하는 함수들 여기다가 추가
     await _categoryProvider.loadCategory();
-    await Future.delayed(const Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 2));
     return "Intro Completed";
   }
 
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
     Provider.of<FrozenProvider>(context, listen: false).initList(datas);
     Provider.of<NormalProvider>(context, listen: false).initList(datas);
     Provider.of<RefrigeratedProvider>(context, listen: false).initList(datas);
+    Provider.of<ControllerProvider>(context,listen: false).init(context);
     //context.read<FrozenProvider>().initList(datas);
     //context.read<NormalProvider>().initList(datas);
     //context.read<RefrigeratedProvider>().initList(datas);
@@ -62,6 +64,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Flutter Term Project',
           debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: AppColor.onPrimaryColor
+          ),
           home: Builder(builder: (context) {
             print("build: main/builder");
             _categoryProvider =

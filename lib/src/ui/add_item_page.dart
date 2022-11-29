@@ -39,15 +39,13 @@ class _AddItemPageState extends State<AddItemPage> {
     count: 0,
     memo: "",
     notificationDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
-    storageCategory: "냉장고 - 냉장",
+    storageCategory: "냉장",
   );
 
   List<String> storages = [
-    '냉장고 - 냉장',
-    '냉장고 - 냉동',
-    '냉장고 - 실온',
-    '욕실',
-    '잡화',
+    '냉장',
+    '냉동',
+    '실온',
   ];
 
   List<String> itemCategories = [
@@ -552,14 +550,14 @@ class _AddItemPageState extends State<AddItemPage> {
                   }
 
                   if (selectedStorage == 0) {
-                    newItem.storageCategory = "냉장고";
-                    newItem.storageSubCategory = "냉장";
+                    newItem.storageCategory = "냉장";
+//                    newItem.storageSubCategory = "냉장";
                   } else if (selectedStorage == 1) {
-                    newItem.storageCategory = "냉장고";
-                    newItem.storageSubCategory = "냉동";
+                    newItem.storageCategory = "냉동";
+//                    newItem.storageSubCategory = "냉동";
                   } else if (selectedStorage == 2) {
-                    newItem.storageCategory = "냉장고";
-                    newItem.storageSubCategory = "실온";
+                    newItem.storageCategory = "실온";
+//                    newItem.storageSubCategory = "실온";
                   } else {
                     setState(() {
                       newItem.storageCategory = storages[selectedStorage];
@@ -567,7 +565,7 @@ class _AddItemPageState extends State<AddItemPage> {
                   }
 
                   print(newItem.storageCategory);
-                  print(newItem.storageSubCategory);
+//                  print(newItem.storageSubCategory);
                   print(newItem.itemCategory);
                   print(newItem.name);
                   print(newItem.enrollDate);
@@ -577,11 +575,11 @@ class _AddItemPageState extends State<AddItemPage> {
                   print(newItem.memo);
 
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
-                  /*
+
                   ControllerProvider _controller =
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
-                  */
+
 
                   Navigator.pushAndRemoveUntil(
                       context,

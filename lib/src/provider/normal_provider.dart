@@ -4,6 +4,7 @@ import 'package:term_proj2/src/model/item.dart';
 // 냉장 품목
 class NormalProvider extends ChangeNotifier {
   Map<String, List<dynamic>> itemList = {};
+  int total = 0;
 
   initList(List<dynamic> datas){
     for(var data in datas){
@@ -14,6 +15,7 @@ class NormalProvider extends ChangeNotifier {
   insertItem(Item item) {
     print('insertItem : ${item.name}');
     itemList[item.itemCategory]!.add(item);
+    total++;
     notifyListeners();
   }
 }

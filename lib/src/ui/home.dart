@@ -8,6 +8,7 @@ import 'package:term_proj2/src/ui/search_page.dart';
 import 'package:term_proj2/src/ui/shopping_list_page.dart';
 import 'package:term_proj2/src/ui/test_page.dart';
 
+import '../model/item.dart';
 import 'add_item_page.dart';
 import 'category_page.dart';
 
@@ -44,17 +45,17 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-                  ),
+              ),
               label: 'home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_box_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-                  ),
+              ),
               label: 'addItem'),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_bag_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-                  ),
+              ),
               label: 'list'),
         ],
         onTap: _onItemTapped,
@@ -255,10 +256,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 0
                 ? const Center(
-                    child: Text(
-                    "냉장",
-                    style: TextStyle(fontSize: 16),
-                  ))
+                child: Text(
+                  "냉장",
+                  style: TextStyle(fontSize: 16),
+                ))
                 : const Center(child: Icon(Icons.dns_rounded)),
           ),
         ),
@@ -277,10 +278,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 1
                 ? const Center(
-                    child: Text(
-                    "냉동",
-                    style: TextStyle(fontSize: 16),
-                  ))
+                child: Text(
+                  "냉동",
+                  style: TextStyle(fontSize: 16),
+                ))
                 : const Center(child: Icon(Icons.ac_unit_rounded)),
           ),
         ),
@@ -299,10 +300,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 2
                 ? Center(
-                    child: const Text(
-                    "실온",
-                    style: TextStyle(fontSize: 16),
-                  ))
+                child: const Text(
+                  "실온",
+                  style: TextStyle(fontSize: 16),
+                ))
                 : Center(child: Icon(Icons.eco_rounded)),
           ),
         ),
@@ -311,18 +312,85 @@ class _HomeState extends State<Home> {
   }
 
   Widget _tabBarViewItem(IconData icon, String name) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 100,
-        ),
-        Text(
-          name,
-          style: const TextStyle(fontSize: 40),
-        ),
-      ],
-    );
+    Map<String, List<dynamic>> itemList;
+    int total = 0;
+    if (name == '냉장 물품') {
+      itemList = context
+          .watch<RefrigeratedProvider>()
+          .itemList;
+      total = context
+          .read<RefrigeratedProvider>()
+          .total;
+    } else if (name == "냉동 물품") {
+      itemList = context
+          .watch<FrozenProvider>()
+          .itemList;
+      total = context
+          .read<FrozenProvider>()
+          .total;
+    } else { // "실온 물품"
+      itemList = context
+          .watch<NormalProvider>()
+          .itemList;
+      total = context
+          .read<NormalProvider>()
+          .total;
+    }
+
+    if (total == 0) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 100,
+          ),
+          Text(
+            name,
+            style: const TextStyle(fontSize: 40),
+          ),
+        ],
+      );
+    } else {
+      // total이 >0 이면, 리스트
+      int category_num = 0;
+      List categoryList = [];
+      for( var category in itemList.keys){
+        if(itemList[category]!.isNotEmpty){
+          // 공백이 아닌 카테고리 수 출력
+          category_num++;
+          categoryList.add(category);
+        }
+      }
+
+      // 이 아래 부분 코드 수정
+      return Padding(
+        padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+        child:ListView.separated(
+            itemBuilder: (context, categoryIndex) {
+              return Column(
+                children: [
+                  Text('${categoryList[categoryIndex]} (${itemList[categoryList[categoryIndex]]!.length})' ),
+                  ListView.builder(
+                      itemBuilder: (context, itemIndex) {
+                        Item item = itemList[categoryList[categoryIndex]]![itemIndex];
+                        return Container(
+                          child: Text('${itemList[categoryList[categoryIndex]]![itemIndex].name}'),
+                        );
+                      },
+                    itemCount: itemList[categoryList[categoryIndex]]!.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                  ),
+                ],
+              );
+
+            },
+            separatorBuilder: (context, index) {
+              return Divider(thickness: 2,);
+            },
+            itemCount: category_num),
+      );
+    }
   }
 }

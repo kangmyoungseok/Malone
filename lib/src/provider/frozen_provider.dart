@@ -4,6 +4,7 @@ import 'package:term_proj2/src/model/item.dart';
 // 냉장 품목
 class FrozenProvider extends ChangeNotifier{
   Map<String,List<dynamic>> itemList = {};
+  int total=0;
 
 
   // 각각의 카테고리별로 빈 배열을 만든다.
@@ -17,6 +18,7 @@ class FrozenProvider extends ChangeNotifier{
   insertItem(Item item){
     print('insertItem : ${item.name}');
     itemList[item.itemCategory]!.add(item);
+    total++;
     notifyListeners();
   }
 }
