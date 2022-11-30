@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
@@ -32,7 +33,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
       Home(),
-      const AddItemPage(),
+//      const AddItemPage(),
+    const CategoryPage(),
       const ShoppingListPage(),
     ];
 
@@ -110,14 +112,6 @@ class _HomeState extends State<Home> {
               _tabBarViewItem(Icons.eco, '실온 물품'),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CategoryPage()));
-          },
-          child: const Icon(Icons.add),
-          backgroundColor: AppColor.onPrimaryColor,
         ),
       ),
     );
@@ -197,15 +191,16 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               child: const Icon(
-                Icons.shopping_cart,
+                Icons.logout,
                 color: AppColor.onPrimaryColor,
               ),
               onTap: () {
-                Navigator.push(
+                FirebaseAuth.instance.signOut();
+/*                Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => ShoppingListPage()));
-                print("장바구니 클릭");
+                print("장바구니 클릭");*/
               },
             ),
             const SizedBox(

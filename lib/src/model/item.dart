@@ -11,6 +11,7 @@ class Item {
   int count; // 수량
   String memo; // 메모
   String storageCategory;   // 냉장냉동,실온
+
 //  String? storageSubCategory; // 보관장소 -> 냉장,냉동,실온
 
   Item({

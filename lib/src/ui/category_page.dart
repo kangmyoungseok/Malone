@@ -1,89 +1,176 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:term_proj2/src/provider/category_provider.dart';
 import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/add_item_page.dart';
 
-class CategoryPage extends StatefulWidget {
+class CategoryPage extends StatelessWidget {
   const CategoryPage({Key? key}) : super(key: key);
 
   @override
-  State<CategoryPage> createState() => _CategoryPageState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColor.primaryColor,
+          leading: const Icon(
+            Icons.category,
+            color: AppColor.onPrimaryColor,
+          ),
+          title: const Text("카테고리"),
+          foregroundColor: AppColor.onPrimaryColor,
+        ),
+        body: const Center(
+          child: GridViewPanel(),
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
-class _CategoryPageState extends State<CategoryPage> {
-  bool _isClicked = false;
+class GridViewPanel extends StatefulWidget {
+  const GridViewPanel({Key? key}) : super(key: key);
+
+  @override
+  State<GridViewPanel> createState() => _GridViewPanelState();
+}
+
+class _GridViewPanelState extends State<GridViewPanel> {
+  List<String> categories = ["bread", "condiments", "dairy", "desserts", "dishes", "drink", "etc", "fruits"];
+  bool _offStage = true;
+  int _clickedIdx = 0;
+
   @override
   Widget build(BuildContext context) {
-    final _itemList = context.read<CategoryProvider>().categoryList;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.primaryColor,
-        title: const Text("카테고리"),
-        actions: const [
-          Icon(Icons.search),
-          SizedBox(width: 20,),
-          Icon(Icons.more_vert)
-        ],
-        foregroundColor: AppColor.onPrimaryColor,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context,MaterialPageRoute(builder: (context)=> AddItemPage()));
-        },
-        child: const Icon(Icons.add),
-        backgroundColor: AppColor.onPrimaryColor,
-      ),
-      body: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(16),
-        itemBuilder:(BuildContext context, int index){
-          if (index == 0){
-            // 큰 카테고리 그리기
-            return GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              children: _itemList.map(
-                (item) {
-                  return GestureDetector(
-
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      margin: const EdgeInsets.all(5),
-                      width: 100,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: 0 == 0 ? AppColor.primaryColor : Colors.white54,
-                        borderRadius: 0 == 0
-                            ? BorderRadius.circular(15)
-                            : BorderRadius.circular(30),
-                        border: 0 == 0
-                            ? null
-                            : null,
-                      ),
-                      child: 0==0
-                          ? const Center(child: Text("냉장",style: TextStyle(fontSize: 16),))
-                          : const Center(child: Icon(Icons.dns_rounded))
-                      ,
+    List<dynamic> datas = context.read<CategoryProvider>().categoryList;
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        physics: BouncingScrollPhysics(),
+        children: <Widget>[
+          GridView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: categories!.length, //item 개수
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4, //1 개의 행에 보여줄 item 개수
+              childAspectRatio: 1 / 1.3, //item 의 가로 1, 세로 1 의 비율
+              mainAxisSpacing: 10, //수평 Padding
+              crossAxisSpacing: 10, //수직 Padding
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              //item 의 반목문 항목 형성
+              return InkWell(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "lib/assets/img/category/"+categories.elementAt(index)+".png",
                     ),
-                  );
-                },
-              ).toList(),
-            );
-          }
-          else{
-            if(_isClicked){
-            return GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              children: [],
-            );
-          }else{
-              return Container();
-            }
-          }
+                    const SizedBox(height: 5,),
+                    Expanded(
+                      child: Container(
+                        height: 10,
+                        alignment: Alignment.center,
+                        child: Text(
+                          datas[index]['name'],
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                onTap: (){
+                  setState(() {
+                    if(_clickedIdx == index){
+                      _offStage = !_offStage;
+                    }else{
+                      _offStage = false;
+                      _clickedIdx = index;
+                    }
+                  });
 
-        } , separatorBuilder: (BuildContext context, int index)=> const Divider(), itemCount: 2),
+                },
+              );
+            },
+          ),
+          const Divider(thickness: 2, color: AppColor.primaryColor,),
+          Offstage(
+            offstage: _offStage,
+            child: Column(
+              children: [
+                const SizedBox(height: 10,),
+                GridViewDetailedPanel(clickedIdx: _clickedIdx),
+                // Text('${(context.read<CategoryProvider>().categoryList[_clickedIdx]['items'])}'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GridViewDetailedPanel extends StatelessWidget {
+  const GridViewDetailedPanel({Key? key, required this.clickedIdx}) : super(key: key);
+  final clickedIdx;
+
+  @override
+  Widget build(BuildContext context) {
+    final categoryName = context.read<CategoryProvider>().categoryList[clickedIdx]['category'];
+    final itemList = context.read<CategoryProvider>().categoryList[clickedIdx]['items'];
+
+    return GridView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: itemList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, //1 개의 행에 보여줄 item 개수
+          childAspectRatio: 1 / 1.3, //item 의 가로 1, 세로 1 의 비율
+          mainAxisSpacing: 10, //수평 Padding
+          crossAxisSpacing: 10,
+        ),
+        itemBuilder: (BuildContext context, int index){
+          return InkWell(
+            child: Column(
+              children: [
+                Image.asset(
+                    "lib/assets/img/items/" + categoryName + "/" + itemList[index]['img']
+                ),
+                const SizedBox(height: 5,),
+                Expanded(
+                  child: Container(
+                    height: 10,
+                    alignment: Alignment.center,
+                    child: Text(
+                      itemList[index]['name'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            onTap: (){ // 세부 음식 이미지를 클릭 시 발생하는 이벤트를 관리하는 부분입니다.
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AddItemPage())); // 페이지 이동을 위한 예시 코드입니다. 담당하시는 분이 수정하시면 됩니다.
+              /**
+               * 1. 세부 음식 이미지를 눌러서 페이지를 이동시키는 부분입니다
+               * 2. 세부 음식의 카테고리명은 {categoryName} 을 통해 불러옵니다
+               * 3. 세부 음식의 음식명은 {itemList[index]['name']} 을 통해 불러옵니다
+               * 4. 세부 음식의 이미지 파일 경로는 {"lib/assets/img/items/" + categoryName + "/" + itemList[index]['img']} 을 통해 불러옵니다
+               * 5. 세부 음식의 정보를 불러오는 데 추가적인 문의가 있을 시 김상협 에게 물어봐주시면 됩니다
+               * */
+            },
+          );
+        }
     );
   }
 }

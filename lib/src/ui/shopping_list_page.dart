@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../styles.dart';
+
 class ShoppingListPage extends StatefulWidget {
   const ShoppingListPage({Key? key}) : super(key: key);
 
@@ -12,7 +14,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('장보기 목록'),
+        backgroundColor: AppColor.primaryColor,
+        title: const Text("장바구니"),
+        leading: Icon(
+          Icons.shopping_cart,
+          color: AppColor.onPrimaryColor,
+        ),
+        foregroundColor: AppColor.onPrimaryColor,
       ),
     );
   }

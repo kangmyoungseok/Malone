@@ -8,8 +8,18 @@ import 'package:term_proj2/src/provider/refrigerated_provider.dart';
 import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/home.dart';
 import 'package:term_proj2/src/ui/intro_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:term_proj2/src/ui/login_page.dart';
+import '../../firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -23,7 +33,18 @@ class MyApp extends StatelessWidget {
       return const Text("Error!!");
     } else if (snapshot.hasData) {
       _initializeProvider(context);
-      return const MainPage();
+//      return const MainPage();
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MainPage();// <- AppPage
+          } else {
+            return const LoginPage();
+          }
+        }
+    );
+      //return Container(child: const Text("what the"));
     } else {
       return const IntroScreen();
     }
@@ -62,7 +83,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => CategoryProvider()),
         ],
         child: MaterialApp(
-          title: 'Flutter Term Project',
+          title: 'Malone',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: AppColor.onPrimaryColor
