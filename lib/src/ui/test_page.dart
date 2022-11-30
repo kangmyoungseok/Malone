@@ -15,61 +15,66 @@ class TestPage extends StatelessWidget {
       ),
       body: Center(
           child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: (){
-                  ControllerProvider _controller = Provider.of<ControllerProvider>(context,listen: false);
-                  Item item = Item(
-                      name: '베이글',
-                      count: 1,
-                      enrollDate: '2022-02-11',
-                      expireDate: '2022-02-11',
-                      itemCategory: '빵류',
-                      memo: '',
-                      notificationDate: '2022-02-12',
-                      storageCategory: '냉장',
-                  );
-                  _controller.insertItem(item);
-                },
-                child: const Text("냉장"),
-              ),
-              ElevatedButton(
-                onPressed: (){
-                  ControllerProvider _controller = Provider.of<ControllerProvider>(context,listen: false);
-                  Item item = Item(
-                      name: '베이글',
-                      count: 1,
-                      enrollDate: '2022-02-11',
-                      expireDate: '2022-02-11',
-                      itemCategory: '빵류',
-                      memo: '',
-                      notificationDate: '2022-02-12',
-                      storageCategory: '냉동',
-                  );
-                  _controller.insertItem(item);
-                },
-                child: const Text("냉동"),
-              ),
-              ElevatedButton(
-                onPressed: (){
-                  ControllerProvider _controller = Provider.of<ControllerProvider>(context,listen: false);
-                  Item item = Item(
-                      name: '베이글',
-                      count: 1,
-                      enrollDate: '2022-02-11',
-                      expireDate: '2022-02-11',
-                      itemCategory: '빵류',
-                      memo: '',
-                      notificationDate: '2022-02-12',
-                      storageCategory: '실온',
-                  );
-                  _controller.insertItem(item);
-                },
-                child: const Text("실온"),
-              ),
-            ],
-          )
-      ),
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              ControllerProvider _controller =
+                  Provider.of<ControllerProvider>(context, listen: false);
+              Item item = Item(
+                name: '베이글',
+                count: 1,
+                enrollDate: '2022-02-11',
+                expireDate: '2022-02-11',
+                itemCategory: '빵류',
+                memo: '',
+                notificationDate: '2022-02-12',
+                storageCategory: '냉장',
+                image: Image.asset('lib/assets/img/items/bread/bagel.img'),
+              );
+              _controller.insertItem(item);
+            },
+            child: const Text("냉장"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ControllerProvider _controller =
+                  Provider.of<ControllerProvider>(context, listen: false);
+              Item item = Item(
+                name: '베이글',
+                count: 1,
+                enrollDate: '2022-02-11',
+                expireDate: '2022-02-11',
+                itemCategory: '빵류',
+                memo: '',
+                notificationDate: '2022-02-12',
+                storageCategory: '냉동',
+                image: Image.asset('lib/assets/img/items/bread/bagel.img'),
+              );
+              _controller.insertItem(item);
+            },
+            child: const Text("냉동"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              ControllerProvider _controller =
+                  Provider.of<ControllerProvider>(context, listen: false);
+              Item item = Item(
+                name: '베이글',
+                count: 1,
+                enrollDate: '2022-02-11',
+                expireDate: '2022-02-11',
+                itemCategory: '빵류',
+                memo: '',
+                notificationDate: '2022-02-12',
+                storageCategory: '실온',
+                image: Image.asset('lib/assets/img/items/bread/bagel.img'),
+              );
+              _controller.insertItem(item);
+            },
+            child: const Text("실온"),
+          ),
+        ],
+      )),
     );
   }
 }

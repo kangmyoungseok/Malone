@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
 import '../model/item.dart';
 import '../provider/controller_provider.dart';
@@ -40,6 +42,7 @@ class _AddItemPageState extends State<AddItemPage> {
     memo: "",
     notificationDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
     storageCategory: "냉장",
+    image: Image.asset('lib/assets/img/category/etc.png'),
   );
 
   List<String> storages = [
@@ -130,7 +133,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
                           selectedStorage = selectedItem;
-                          // newItem.storageCategory = storages[selectedItem];
+                          newItem.storageCategory = storages[selectedItem];
                         });
                       },
                       children:
@@ -549,23 +552,43 @@ class _AddItemPageState extends State<AddItemPage> {
                     });
                   }
 
-                  if (selectedStorage == 0) {
-                    newItem.storageCategory = "냉장";
-//                    newItem.storageSubCategory = "냉장";
-                  } else if (selectedStorage == 1) {
-                    newItem.storageCategory = "냉동";
-//                    newItem.storageSubCategory = "냉동";
-                  } else if (selectedStorage == 2) {
-                    newItem.storageCategory = "실온";
-//                    newItem.storageSubCategory = "실온";
-                  } else {
+                  if (newItem.itemCategory == "빵류") {
                     setState(() {
-                      newItem.storageCategory = storages[selectedStorage];
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/bread.png");
+                    });
+                  } else if (newItem.itemCategory == "조미료") {
+                    setState(() {
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/condiments.png");
+                    });
+                  } else if (newItem.itemCategory == "유제품") {
+                    setState(() {
+                      newItem.image = Image.asset(
+                          "lib/assets/img/category/dairy-products.png");
+                    });
+                  } else if (newItem.itemCategory == "디저트") {
+                    setState(() {
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/desserts.png");
+                    });
+                  } else if (newItem.itemCategory == "요리") {
+                    setState(() {
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/dish.png");
+                    });
+                  } else if (newItem.itemCategory == "음료") {
+                    setState(() {
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/drink.png");
+                    });
+                  } else if (newItem.itemCategory == "과일") {
+                    setState(() {
+                      newItem.image =
+                          Image.asset("lib/assets/img/category/fruits.png");
                     });
                   }
-
                   print(newItem.storageCategory);
-//                  print(newItem.storageSubCategory);
                   print(newItem.itemCategory);
                   print(newItem.name);
                   print(newItem.enrollDate);
@@ -573,13 +596,11 @@ class _AddItemPageState extends State<AddItemPage> {
                   print(newItem.notificationDate);
                   print(newItem.count);
                   print(newItem.memo);
-
-                  /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
+                  print(newItem.image);
 
                   ControllerProvider _controller =
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
-
 
                   Navigator.pushAndRemoveUntil(
                       context,
