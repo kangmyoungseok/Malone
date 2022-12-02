@@ -12,7 +12,12 @@ class AddItemPage extends StatefulWidget {
   final String name;
   final String itemCategory;
   final String img;
-  const AddItemPage({Key? key, required String this.itemCategory, required String this.name, required String this.img }) : super(key: key);
+  const AddItemPage(
+      {Key? key,
+      required String this.itemCategory,
+      required String this.name,
+      required String this.img})
+      : super(key: key);
 
   @override
   State<AddItemPage> createState() => _AddItemPageState();
@@ -66,7 +71,6 @@ class _AddItemPageState extends State<AddItemPage> {
     "기타",
   ];
 
-
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,
@@ -88,7 +92,7 @@ class _AddItemPageState extends State<AddItemPage> {
       ),
     );
   }
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -107,6 +111,7 @@ class _AddItemPageState extends State<AddItemPage> {
         title: const Text("새로운 식품"),
         foregroundColor: AppColor.onPrimaryColor,
       ),
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: ListView(
@@ -118,15 +123,15 @@ class _AddItemPageState extends State<AddItemPage> {
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.withOpacity(0.5),width: 2),
+                    border: Border.all(
+                        color: Colors.grey.withOpacity(0.5), width: 2),
                     borderRadius: BorderRadius.circular(20),
-                    image : DecorationImage(
-                      image: AssetImage(widget.img)
-                    ),
+                    image: DecorationImage(image: AssetImage(widget.img)),
                   ),
-
                 ), // 이미지
-                const SizedBox(width: 20,),
+                const SizedBox(
+                  width: 20,
+                ),
                 Column(
                   children: [
                     const Text(
@@ -140,7 +145,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     const SizedBox(
                       height: 3,
                     ),
- /*                   const Text(
+                    /*                   const Text(
                       '제품 카테고리를 선택해 주세요.',
                       style: TextStyle(
                         fontSize: 13,
@@ -166,17 +171,18 @@ class _AddItemPageState extends State<AddItemPage> {
                               onSelectedItemChanged: (int selectedItem) {
                                 setState(() {
                                   selectedItemCategory = selectedItem;
-                                  newItem.itemCategory = itemCategories[selectedItem];
+                                  newItem.itemCategory =
+                                      itemCategories[selectedItem];
                                 });
                               },
-                              children: List<Widget>.generate(itemCategories.length,
-                                      (int index) {
-                                    return Center(
-                                      child: Text(
-                                        itemCategories[index],
-                                      ),
-                                    );
-                                  }),
+                              children: List<Widget>.generate(
+                                  itemCategories.length, (int index) {
+                                return Center(
+                                  child: Text(
+                                    itemCategories[index],
+                                  ),
+                                );
+                              }),
                             ),
                           ),
                           // This displays the selected fruit name.
@@ -185,7 +191,7 @@ class _AddItemPageState extends State<AddItemPage> {
                             style: const TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.black // AppColor.onPrimaryColor,
-                            ),
+                                ),
                           ),
                         ),
                       ],
@@ -193,7 +199,6 @@ class _AddItemPageState extends State<AddItemPage> {
                     const SizedBox(
                       height: 40,
                     ),
-
                     const Text(
                       '제품 이름',
                       style: TextStyle(
@@ -230,9 +235,7 @@ class _AddItemPageState extends State<AddItemPage> {
                               color: AppColor.onPrimaryColor,
                             ),
                           ),
-
                         ),
-
                       ),
                     ),
                   ],
@@ -240,7 +243,9 @@ class _AddItemPageState extends State<AddItemPage> {
               ],
             ),
 
-            const SizedBox(height: 50,),
+            const SizedBox(
+              height: 50,
+            ),
             // Image.asset(widget.img),
             const Text(
               '보관장소',
@@ -283,7 +288,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         });
                       },
                       children:
-                      List<Widget>.generate(storages.length, (int index) {
+                          List<Widget>.generate(storages.length, (int index) {
                         return Center(
                           child: Text(
                             storages[index],
@@ -298,7 +303,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black // AppColor.onPrimaryColor,
-                    ),
+                        ),
                   ),
                 ),
               ],
@@ -454,9 +459,9 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       enrollDateTime = newDate;
                       enrollDate =
-                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                       newItem.enrollDate =
-                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                     });
                   },
                 ),
@@ -507,9 +512,9 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       expireDateTime = newDate;
                       expireDate =
-                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                       newItem.expireDate =
-                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                     });
                   },
                 ),
@@ -563,9 +568,9 @@ class _AddItemPageState extends State<AddItemPage> {
                         setState(() {
                           notificationDateTime = newDate;
                           notificationDate =
-                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                           newItem.notificationDate =
-                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                         });
                       },
                     ),
@@ -731,15 +736,14 @@ class _AddItemPageState extends State<AddItemPage> {
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 
                   ControllerProvider _controller =
-                  Provider.of<ControllerProvider>(context, listen: false);
+                      Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
-
 
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => const MainPage()),
-                          (route) => false);
+                      (route) => false);
                 },
                 child: const Text("등록하기"),
               ),
