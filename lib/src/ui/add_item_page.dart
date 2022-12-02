@@ -45,11 +45,11 @@ class _AddItemPageState extends State<AddItemPage> {
   Item newItem = Item(
     itemCategory: "빵류",
     name: "",
-    enrollDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
-    expireDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
+    enrollDate: DateFormat('yyyyMMdd').format(DateTime.now()),
+    expireDate: DateFormat('yyyyMMdd').format(DateTime.now()),
     count: 0,
     memo: "",
-    notificationDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
+    notificationDate: DateFormat('yyyyMMdd').format(DateTime.now()),
     storageCategory: "냉장",
     image: '',
   );
@@ -103,11 +103,11 @@ class _AddItemPageState extends State<AddItemPage> {
     _nameController.text = widget.name;
     newItem.name = widget.name;
     newItem.itemCategory = itemCategories[selectedItemCategory];
-
   }
 
   @override
   Widget build(BuildContext context) {
+    newItem.image = widget.img;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
@@ -464,7 +464,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       enrollDate =
                           '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                       newItem.enrollDate =
-                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                          DateFormat('yyyyMMdd').format(enrollDateTime);
                     });
                   },
                 ),
@@ -517,7 +517,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       expireDate =
                           '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                       newItem.expireDate =
-                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                          DateFormat('yyyyMMdd').format(expireDateTime);
                     });
                   },
                 ),
@@ -572,8 +572,8 @@ class _AddItemPageState extends State<AddItemPage> {
                           notificationDateTime = newDate;
                           notificationDate =
                               '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
-                          newItem.notificationDate =
-                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                          newItem.notificationDate = DateFormat('yyyyMMdd')
+                              .format(notificationDateTime);
                         });
                       },
                     ),
