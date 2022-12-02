@@ -101,6 +101,9 @@ class _AddItemPageState extends State<AddItemPage> {
     print(widget.itemCategory);
     selectedItemCategory = itemCategories.indexOf(widget.itemCategory);
     _nameController.text = widget.name;
+    newItem.name = widget.name;
+    newItem.itemCategory = itemCategories[selectedItemCategory];
+
   }
 
   @override
@@ -739,11 +742,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
 
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => const MainPage()),
-                      (route) => false);
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: const Text("등록하기"),
               ),
