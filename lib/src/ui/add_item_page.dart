@@ -111,8 +111,137 @@ class _AddItemPageState extends State<AddItemPage> {
         padding: const EdgeInsets.all(30.0),
         child: ListView(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.withOpacity(0.5),width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                    image : DecorationImage(
+                      image: AssetImage(widget.img)
+                    ),
+                  ),
 
-            Image.asset(widget.img),
+                ), // 이미지
+                const SizedBox(width: 20,),
+                Column(
+                  children: [
+                    const Text(
+                      '카테고리',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.onPrimaryColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+ /*                   const Text(
+                      '제품 카테고리를 선택해 주세요.',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Color.fromARGB(255, 116, 113, 149),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),*/
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          // Display a CupertinoPicker with list of fruits.
+                          onPressed: () => _showDialog(
+                            CupertinoPicker(
+                              magnification: 1.22,
+                              squeeze: 1.2,
+                              useMagnifier: true,
+                              itemExtent: _kItemExtent,
+                              // This is called when selected item is changed.
+                              onSelectedItemChanged: (int selectedItem) {
+                                setState(() {
+                                  selectedItemCategory = selectedItem;
+                                  newItem.itemCategory = itemCategories[selectedItem];
+                                });
+                              },
+                              children: List<Widget>.generate(itemCategories.length,
+                                      (int index) {
+                                    return Center(
+                                      child: Text(
+                                        itemCategories[index],
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ),
+                          // This displays the selected fruit name.
+                          child: Text(
+                            itemCategories[selectedItemCategory],
+                            style: const TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black // AppColor.onPrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+
+                    const Text(
+                      '제품 이름',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.onPrimaryColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    SizedBox(
+                      width: 150,
+                      height: 60,
+                      child: TextField(
+                        controller: _nameController,
+                        onChanged: (text) {
+                          setState(() {
+                            _nameController.text = text;
+                            newItem.name = text;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'name',
+                          labelStyle: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: AppColor.onPrimaryColor,
+                            ),
+                          ),
+
+                        ),
+
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+
+            const SizedBox(height: 50,),
+            // Image.asset(widget.img),
             const Text(
               '보관장소',
               style: TextStyle(
@@ -178,7 +307,7 @@ class _AddItemPageState extends State<AddItemPage> {
               height: 40,
             ),
 
-            const Text(
+/*            const Text(
               '카테고리',
               style: TextStyle(
                 fontSize: 20,
@@ -290,7 +419,7 @@ class _AddItemPageState extends State<AddItemPage> {
             ),
             const SizedBox(
               height: 40,
-            ),
+            ),*/
 
             const Text(
               '등록 날짜',

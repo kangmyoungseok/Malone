@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
