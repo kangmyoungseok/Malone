@@ -68,7 +68,7 @@ class _GridViewPanelState extends State<GridViewPanel> {
                 child: Column(
                   children: [
                     Image.asset(
-                      "lib/assets/img/category/"+categories.elementAt(index)+".png",
+                      "lib/assets/img/category/${categories.elementAt(index)}.png",
                     ),
                     const SizedBox(height: 5,),
                     Expanded(
@@ -123,13 +123,14 @@ class GridViewDetailedPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryName = context.read<CategoryProvider>().categoryList[clickedIdx]['category'];
+    final categoryPrintName = context.read<CategoryProvider>().categoryList[clickedIdx]['name'];
     final itemList = context.read<CategoryProvider>().categoryList[clickedIdx]['items'];
 
     return GridView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: itemList.length,
+        itemCount: itemList.length + 1,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4, //1 개의 행에 보여줄 item 개수
           childAspectRatio: 1 / 1.3, //item 의 가로 1, 세로 1 의 비율
@@ -137,6 +138,31 @@ class GridViewDetailedPanel extends StatelessWidget {
           crossAxisSpacing: 10,
         ),
         itemBuilder: (BuildContext context, int index){
+          if ( index == itemList.length) {
+            String imgPath = "lib/assets/img/category/dish.png";
+            return GestureDetector(
+              onTap: (){
+                var logger = Logger();
+                logger.d('$categoryName');
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddItemPage(itemCategory: categoryPrintName,name: '',img : imgPath))); // 페이지 이동을 위한 예시 코드입니다. 담당하시는 분이 수정하시면 됩니다.
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top:20,bottom: 20,left: 10,right: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.25),
+                  borderRadius: BorderRadius.circular(10)
+                ),
+                child: Center(
+                  child: Text(
+                    '+',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
+              ),
+            );
+          }
           return InkWell(
             child: Column(
               children: [
@@ -159,8 +185,11 @@ class GridViewDetailedPanel extends StatelessWidget {
               ],
             ),
             onTap: (){ // 세부 음식 이미지를 클릭 시 발생하는 이벤트를 관리하는 부분입니다.
+              var logger = Logger();
+              String imgPath = "lib/assets/img/items/$categoryName/${itemList[index]['img']}";
+              logger.d('$categoryName ${itemList[index]['name']} ');
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddItemPage())); // 페이지 이동을 위한 예시 코드입니다. 담당하시는 분이 수정하시면 됩니다.
+                  MaterialPageRoute(builder: (context) => AddItemPage(itemCategory: categoryPrintName,name: itemList[index]['name'],img: imgPath))); // 페이지 이동을 위한 예시 코드입니다. 담당하시는 분이 수정하시면 됩니다.
               /**
                * 1. 세부 음식 이미지를 눌러서 페이지를 이동시키는 부분입니다
                * 2. 세부 음식의 카테고리명은 {categoryName} 을 통해 불러옵니다

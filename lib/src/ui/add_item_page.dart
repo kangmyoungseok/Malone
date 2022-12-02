@@ -9,7 +9,10 @@ import 'home.dart';
 import '../styles.dart';
 
 class AddItemPage extends StatefulWidget {
-  const AddItemPage({Key? key}) : super(key: key);
+  final String name;
+  final String itemCategory;
+  final String img;
+  const AddItemPage({Key? key, required String this.itemCategory, required String this.name, required String this.img }) : super(key: key);
 
   @override
   State<AddItemPage> createState() => _AddItemPageState();
@@ -18,6 +21,8 @@ class AddItemPage extends StatefulWidget {
 class _AddItemPageState extends State<AddItemPage> {
   final double _kItemExtent = 32.0;
 
+  late String img;
+  late String itemCategory;
   int selectedStorage = 0;
   int selectedItemCategory = 0;
   String name = "";
@@ -30,6 +35,7 @@ class _AddItemPageState extends State<AddItemPage> {
   bool whetherNotify = true;
   int count = 0;
   String memo = "";
+  TextEditingController _nameController = TextEditingController();
 
   Item newItem = Item(
     itemCategory: "빵류",
@@ -40,6 +46,7 @@ class _AddItemPageState extends State<AddItemPage> {
     memo: "",
     notificationDate: DateFormat('yyyy/MM/dd').format(DateTime.now()),
     storageCategory: "냉장",
+    image: '',
   );
 
   List<String> storages = [
@@ -58,6 +65,7 @@ class _AddItemPageState extends State<AddItemPage> {
     "과일",
     "기타",
   ];
+
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -80,6 +88,16 @@ class _AddItemPageState extends State<AddItemPage> {
       ),
     );
   }
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.name);
+    print(widget.itemCategory);
+    selectedItemCategory = itemCategories.indexOf(widget.itemCategory);
+    _nameController.text = widget.name;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +111,8 @@ class _AddItemPageState extends State<AddItemPage> {
         padding: const EdgeInsets.all(30.0),
         child: ListView(
           children: [
+
+            Image.asset(widget.img),
             const Text(
               '보관장소',
               style: TextStyle(
@@ -134,7 +154,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         });
                       },
                       children:
-                          List<Widget>.generate(storages.length, (int index) {
+                      List<Widget>.generate(storages.length, (int index) {
                         return Center(
                           child: Text(
                             storages[index],
@@ -149,7 +169,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black // AppColor.onPrimaryColor,
-                        ),
+                    ),
                   ),
                 ),
               ],
@@ -157,6 +177,7 @@ class _AddItemPageState extends State<AddItemPage> {
             const SizedBox(
               height: 40,
             ),
+
             const Text(
               '카테고리',
               style: TextStyle(
@@ -198,13 +219,13 @@ class _AddItemPageState extends State<AddItemPage> {
                         });
                       },
                       children: List<Widget>.generate(itemCategories.length,
-                          (int index) {
-                        return Center(
-                          child: Text(
-                            itemCategories[index],
-                          ),
-                        );
-                      }),
+                              (int index) {
+                            return Center(
+                              child: Text(
+                                itemCategories[index],
+                              ),
+                            );
+                          }),
                     ),
                   ),
                   // This displays the selected fruit name.
@@ -213,7 +234,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black // AppColor.onPrimaryColor,
-                        ),
+                    ),
                   ),
                 ),
               ],
@@ -221,6 +242,7 @@ class _AddItemPageState extends State<AddItemPage> {
             const SizedBox(
               height: 40,
             ),
+
             const Text(
               '제품 이름',
               style: TextStyle(
@@ -243,8 +265,10 @@ class _AddItemPageState extends State<AddItemPage> {
               height: 20,
             ),
             TextField(
+              controller: _nameController,
               onChanged: (text) {
                 setState(() {
+                  _nameController.text = text;
                   newItem.name = text;
                 });
               },
@@ -267,6 +291,7 @@ class _AddItemPageState extends State<AddItemPage> {
             const SizedBox(
               height: 40,
             ),
+
             const Text(
               '등록 날짜',
               style: TextStyle(
@@ -300,9 +325,9 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       enrollDateTime = newDate;
                       enrollDate =
-                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                       newItem.enrollDate =
-                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                     });
                   },
                 ),
@@ -353,9 +378,9 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       expireDateTime = newDate;
                       expireDate =
-                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                       newItem.expireDate =
-                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                     });
                   },
                 ),
@@ -409,9 +434,9 @@ class _AddItemPageState extends State<AddItemPage> {
                         setState(() {
                           notificationDateTime = newDate;
                           notificationDate =
-                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                           newItem.notificationDate =
-                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                         });
                       },
                     ),
@@ -577,7 +602,7 @@ class _AddItemPageState extends State<AddItemPage> {
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 
                   ControllerProvider _controller =
-                      Provider.of<ControllerProvider>(context, listen: false);
+                  Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
 
 
@@ -585,7 +610,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => const MainPage()),
-                      (route) => false);
+                          (route) => false);
                 },
                 child: const Text("등록하기"),
               ),

@@ -28,6 +28,7 @@ class TestPage extends StatelessWidget {
                       memo: '',
                       notificationDate: '2022-02-12',
                       storageCategory: '냉장',
+                    image: '1'
                   );
                   _controller.insertItem(item);
                 },
@@ -45,6 +46,7 @@ class TestPage extends StatelessWidget {
                       memo: '',
                       notificationDate: '2022-02-12',
                       storageCategory: '냉동',
+                    image: '1'
                   );
                   _controller.insertItem(item);
                 },
@@ -62,6 +64,7 @@ class TestPage extends StatelessWidget {
                       memo: '',
                       notificationDate: '2022-02-12',
                       storageCategory: '실온',
+                    image: '1'
                   );
                   _controller.insertItem(item);
                 },

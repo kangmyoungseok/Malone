@@ -20,6 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
+  Color iconColor1 = Colors.grey;
+  Color iconColor2 = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
@@ -38,39 +40,68 @@ class _LoginPageState extends State<LoginPage> {
                   //SizedBox(height: 100,),
                   Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Email',
-                            icon: const Icon(Icons.mail_outline)
+                        padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        onChanged: (value) {
-                          email = value;
-                        },
-                      ),
+                        child: Focus(
+                          onFocusChange: (hasFocus) {
+                            if(hasFocus){iconColor1=Color.fromRGBO(109, 119, 233, 10);}
+                            else{iconColor1=Colors.grey;}
+                            setState(() {
+                            });
+                          },
+                          child: TextFormField(
+                            autofocus: true,
+                            cursorColor: Color.fromRGBO(109, 119, 233, 10),
+                            decoration: InputDecoration(
+                                labelText: 'Email',
+                                labelStyle: TextStyle(color: Colors.grey),
+                                floatingLabelStyle: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Color.fromRGBO(109, 119, 233, 10), width: 1.9,)
+                                ),
+                                icon: Icon(Icons.mail_outline, color: iconColor1)
+                            ),
+                            onChanged: (value) {
+                              email = value;
+                            },
+                          ),
+                        )
                     ),
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                            labelText: 'Password',
-                            icon: const Icon(Icons.lock_outline)
+                        padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        onChanged: (value) {
-                          password = value;
-                        },
-                      ),
+                        child: Focus(
+                          onFocusChange: (hasFocus) {
+                            if(hasFocus){iconColor2=Color.fromRGBO(109, 119, 233, 10);}
+                            else{iconColor2=Colors.grey;}
+                            setState(() {
+                            });
+                          },
+                          child: TextFormField(
+                            obscureText: true,
+                            cursorColor: Color.fromRGBO(109, 119, 233, 10),
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.grey),
+                              floatingLabelStyle: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color.fromRGBO(109, 119, 233, 10), width: 1.9,)
+                              ),
+                              icon: Icon(Icons.lock_outline, color: iconColor2),
+                            ),
+                            onChanged: (value) {
+                              password = value;
+                            },
+                          ),
+                        )
                     ),
                   ),
                   Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -183,6 +214,9 @@ class _RegisterFormState extends State<RegisterForm> {
   String email = '';
   String password = '';
   String userName = '';
+  Color iconColor1 = Colors.grey;
+  Color iconColor2 = Colors.grey;
+  Color iconColor3 = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
@@ -198,57 +232,100 @@ class _RegisterFormState extends State<RegisterForm> {
             //SizedBox(height: 100,),
             Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               child: Container(
-                padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'User',
-                      icon: const Icon(Icons.person_outline),
+                  padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  onChanged: (value) {
-                    userName = value;
-                  },
-                ),
+                  child: Focus(
+                    onFocusChange: (hasFocus) {
+                      if(hasFocus){iconColor1=Color.fromRGBO(109, 119, 233, 10);}
+                      else{iconColor1=Colors.grey;}
+                      setState(() {
+                      });
+                    },
+                    child: TextFormField(
+                      autofocus: true,
+                      cursorColor: Color.fromRGBO(109, 119, 233, 10),
+                      decoration: InputDecoration(
+                        labelText: 'User',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        floatingLabelStyle: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(109, 119, 233, 10), width: 1.9,)
+                        ),
+                        icon: Icon(Icons.person_outline, color: iconColor1),
+                      ),
+                      onChanged: (value) {
+                        userName = value;
+                      },
+                    ),
+                  )
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               child: Container(
-                padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'Email',
-                      icon: const Icon(Icons.mail_outline)
+                  padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
+                  child: Focus(
+                    onFocusChange: (hasFocus) {
+                      if(hasFocus){iconColor2=Color.fromRGBO(109, 119, 233, 10);}
+                      else{iconColor2=Colors.grey;}
+                      setState(() {
+                      });
+                    },
+                    child: TextFormField(
+                      cursorColor: Color.fromRGBO(109, 119, 233, 10),
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        floatingLabelStyle: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(109, 119, 233, 10), width: 1.9,)
+                        ),
+                        icon: Icon(Icons.mail_outline, color: iconColor2),
+                      ),
+                      onChanged: (value) {
+                        email = value;
+                      },
+                    ),
+                  )
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               child: Container(
-                padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      labelText: 'Password',
-                      icon: const Icon(Icons.lock_outline)
+                  padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
                   ),
-                  onChanged: (value) {
-                    password = value;
-                  },
-                ),
+                  child:  Focus(
+                    onFocusChange: (hasFocus) {
+                      if(hasFocus){iconColor3=Color.fromRGBO(109, 119, 233, 10);}
+                      else{iconColor3=Colors.grey;}
+                      setState(() {
+                      });
+                    },
+                    child: TextFormField(
+                      obscureText: true,
+                      cursorColor: Color.fromRGBO(109, 119, 233, 10),
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        floatingLabelStyle: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(109, 119, 233, 10), width: 1.9,)
+                        ),
+                        icon: Icon(Icons.lock_outline, color: iconColor3),
+                      ),
+                      onChanged: (value) {
+                        password = value;
+                      },
+                    ),
+                  )
               ),
             ),
             Padding(padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -311,8 +388,9 @@ class _RegisterFormState extends State<RegisterForm> {
                                                     )
                                                 );
                                               },
-                                              icon: const Icon(Icons.login_outlined),
-                                              label: Text('Login as ${userName}'))
+                                              icon: const Icon(Icons.login_outlined, color: Color.fromRGBO(109, 119, 233, 10),),
+                                              label: Text('Login as ${userName}',
+                                                style: TextStyle(color: Color.fromRGBO(109, 119, 233, 10)),))
                                         ],
                                       ),
                                     ),
@@ -346,11 +424,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 children: [
                   const Text("If you already registered, "),
                   TextButton(
-                      onPressed: (){
-                    Navigator.pop(context);
-                  },
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColor.onPrimaryColor
+                        foregroundColor: AppColor.onPrimaryColor
                     )
                     ,child: const Text("please login."),
                   )

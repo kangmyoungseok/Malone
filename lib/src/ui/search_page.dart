@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:term_proj2/src/styles.dart';
+
+import '../provider/frozen_provider.dart';
+import '../provider/normal_provider.dart';
+import '../provider/refrigerated_provider.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -58,8 +63,21 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final frozen_list = context.read<FrozenProvider>().itemList;
+    final refrige_list = context.read<RefrigeratedProvider>().itemList;
+    final normal_list = context.read<NormalProvider>().itemList;
+
     return Scaffold(
-      body: _searchBox()
+        body: Center(
+            child: Column(
+              children: [
+                _searchBox(),
+                // Text('${(frozen_list)}'),
+                Text('${(refrige_list)}'),
+                // ElevatedButton(onPressed: (){}, child: Text('Button'))
+              ],
+            )
+        )
     );
   }
 }
