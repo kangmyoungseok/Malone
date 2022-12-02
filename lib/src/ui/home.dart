@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
     List<Widget> _widgetOptions = <Widget>[
       Home(),
 //      const AddItemPage(),
-    const CategoryPage(),
+      const CategoryPage(),
       const ShoppingListPage(),
     ];
 
@@ -48,17 +48,17 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-              ),
+                  ),
               label: 'home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_box_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-              ),
+                  ),
               label: 'addItem'),
           BottomNavigationBarItem(
               icon: Icon(Icons.shopping_bag_outlined,
                   color: AppColor.onPrimaryColor // Colors.blue,
-              ),
+                  ),
               label: 'list'),
         ],
         onTap: _onItemTapped,
@@ -252,10 +252,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 0
                 ? const Center(
-                child: Text(
-                  "냉장",
-                  style: TextStyle(fontSize: 16),
-                ))
+                    child: Text(
+                    "냉장",
+                    style: TextStyle(fontSize: 16),
+                  ))
                 : const Center(child: Icon(Icons.dns_rounded)),
           ),
         ),
@@ -274,10 +274,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 1
                 ? const Center(
-                child: Text(
-                  "냉동",
-                  style: TextStyle(fontSize: 16),
-                ))
+                    child: Text(
+                    "냉동",
+                    style: TextStyle(fontSize: 16),
+                  ))
                 : const Center(child: Icon(Icons.ac_unit_rounded)),
           ),
         ),
@@ -296,10 +296,10 @@ class _HomeState extends State<Home> {
             ),
             child: current == 2
                 ? Center(
-                child: const Text(
-                  "실온",
-                  style: TextStyle(fontSize: 16),
-                ))
+                    child: const Text(
+                    "실온",
+                    style: TextStyle(fontSize: 16),
+                  ))
                 : Center(child: Icon(Icons.eco_rounded)),
           ),
         ),
@@ -311,26 +311,15 @@ class _HomeState extends State<Home> {
     Map<String, List<dynamic>> itemList;
     int total = 0;
     if (name == '냉장 물품') {
-      itemList = context
-          .watch<RefrigeratedProvider>()
-          .itemList;
-      total = context
-          .read<RefrigeratedProvider>()
-          .total;
+      itemList = context.watch<RefrigeratedProvider>().itemList;
+      total = context.read<RefrigeratedProvider>().total;
     } else if (name == "냉동 물품") {
-      itemList = context
-          .watch<FrozenProvider>()
-          .itemList;
-      total = context
-          .read<FrozenProvider>()
-          .total;
-    } else { // "실온 물품"
-      itemList = context
-          .watch<NormalProvider>()
-          .itemList;
-      total = context
-          .read<NormalProvider>()
-          .total;
+      itemList = context.watch<FrozenProvider>().itemList;
+      total = context.read<FrozenProvider>().total;
+    } else {
+      // "실온 물품"
+      itemList = context.watch<NormalProvider>().itemList;
+      total = context.read<NormalProvider>().total;
     }
 
     if (total == 0) {
@@ -351,8 +340,8 @@ class _HomeState extends State<Home> {
       // total이 >0 이면, 리스트
       int category_num = 0;
       List categoryList = [];
-      for( var category in itemList.keys){
-        if(itemList[category]!.isNotEmpty){
+      for (var category in itemList.keys) {
+        if (itemList[category]!.isNotEmpty) {
           // 공백이 아닌 카테고리 수 출력
           category_num++;
           categoryList.add(category);
@@ -362,28 +351,115 @@ class _HomeState extends State<Home> {
       // 이 아래 부분 코드 수정
       return Padding(
         padding: EdgeInsets.only(top: 16, left: 16, right: 16),
-        child:ListView.separated(
+        child: ListView.separated(
             itemBuilder: (context, categoryIndex) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${categoryList[categoryIndex]} (${itemList[categoryList[categoryIndex]]!.length})' ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '${categoryList[categoryIndex]} (${itemList[categoryList[categoryIndex]]!.length})',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ListView.builder(
-                      itemBuilder: (context, itemIndex) {
-                        Item item = itemList[categoryList[categoryIndex]]![itemIndex];
-                        return Container(
-                          child: Text('${itemList[categoryList[categoryIndex]]![itemIndex].name}'),
-                        );
-                      },
+                    itemBuilder: (context, itemIndex) {
+                      Item item =
+                          itemList[categoryList[categoryIndex]]![itemIndex];
+                      print(itemList[categoryList[categoryIndex]]![itemIndex]
+                          .image);
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFEFF2F4),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            height: 80,
+                            child: Row(
+                              children: [
+                                Container(
+                                  color: const Color(0xFFEFF2F4),
+                                  width: 20,
+                                  height: 50,
+                                ),
+                                Container(
+                                  width: 30,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFEFF2F4),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        itemList[categoryList[categoryIndex]]![
+                                                itemIndex]
+                                            .image,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  color: const Color(0xFFEFF2F4),
+                                  width: 20,
+                                  height: 50,
+                                ),
+                                Container(
+                                  height: 50,
+                                  color: const Color(0xFFEFF2F4),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${itemList[categoryList[categoryIndex]]![itemIndex].name}',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(
+                                        itemList[categoryList[categoryIndex]]![
+                                                        itemIndex]
+                                                    .notificationDate !=
+                                                null
+                                            ? 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].notificationDate).difference(DateTime.now()).inDays.toString())}'
+                                            : 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].expireDate).difference(DateTime.now()).inDays.toString())}',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    },
                     itemCount: itemList[categoryList[categoryIndex]]!.length,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                 ],
               );
-
             },
             separatorBuilder: (context, index) {
-              return Divider(thickness: 2,);
+              return Divider(
+                thickness: 2,
+              );
             },
             itemCount: category_num),
       );
