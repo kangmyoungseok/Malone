@@ -3,7 +3,7 @@ import 'package:term_proj2/src/model/item.dart';
 
 // 냉장 품목
 class NormalProvider extends ChangeNotifier {
-  Map<String, List<dynamic>> itemList = {};
+  Map<String, List<Item>> itemList = {};
   int total = 0;
 
   initList(List<dynamic> datas){
@@ -18,4 +18,10 @@ class NormalProvider extends ChangeNotifier {
     total++;
     notifyListeners();
   }
+
+  removeItem(Item item){
+    itemList[item.itemCategory]?.removeWhere((element) => element.name == item.name && element.count == item.count);
+    notifyListeners();
+  }
+
 }

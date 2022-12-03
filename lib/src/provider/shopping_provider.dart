@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class ShoppingProvider extends ChangeNotifier{
 
   // ['롤빵','상그리아','맥주','감','당근'] 이런식으로 장바구니 데이터들이 들어감
-  List<String> productList = [];
+  List<Shopping> productList = [];
 
   // ShoppingProvider.add('롤빵');
   add(String product){
-    productList.add(product);
+    productList.add(Shopping(product,false));
     notifyListeners();
   }
 
@@ -16,4 +16,12 @@ class ShoppingProvider extends ChangeNotifier{
     productList.removeAt(idx);
     notifyListeners();
   }
+
+}
+
+class Shopping{
+  String name;
+  bool isSelected;
+
+  Shopping(this.name,this.isSelected);
 }

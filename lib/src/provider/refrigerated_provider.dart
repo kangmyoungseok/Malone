@@ -4,7 +4,7 @@ import '../model/item.dart';
 
 // 냉장 품목
 class RefrigeratedProvider extends ChangeNotifier{
-  Map<String,List<dynamic>> itemList = {};
+  Map<String,List<Item>> itemList = {};
   int total = 0;
 
   initList(List<dynamic> datas){
@@ -20,4 +20,10 @@ class RefrigeratedProvider extends ChangeNotifier{
     total++;
     notifyListeners();
   }
+
+  removeItem(Item item){
+    itemList[item.itemCategory]?.removeWhere((element) => element.name == item.name && element.count == item.count);
+    notifyListeners();
+  }
+
 }

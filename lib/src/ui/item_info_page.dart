@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:term_proj2/src/provider/frozen_provider.dart';
+import 'package:term_proj2/src/provider/normal_provider.dart';
+import 'package:term_proj2/src/provider/refrigerated_provider.dart';
+import 'package:term_proj2/src/provider/shopping_provider.dart';
 
 import '../model/item.dart';
 import '../provider/controller_provider.dart';
@@ -106,8 +111,43 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
         title: const Text("음식 정보"),
         foregroundColor: AppColor.onPrimaryColor,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
-          IconButton(onPressed: (){}, icon: Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
+          IconButton(onPressed: (){
+            // 해당 아이템이 들어있는 배열을 찾는다.
+            Logger().d('쇼핑카트 추가  ${widget.item.name}');
+            var _provider ;
+            if (widget.item.storageCategory == '냉장'){
+              _provider = context.read<RefrigeratedProvider>();
+            }
+            if (widget.item.storageCategory == '냉동'){
+              _provider = context.read<FrozenProvider>();
+            }
+            if(widget.item.storageCategory == '실온'){
+              _provider = context.read<NormalProvider>();
+            }
+
+            _provider.removeItem(widget.item);
+            context.read<ShoppingProvider>().add(widget.item.name);
+            Navigator.pop(context);
+
+          }, icon: Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
+          IconButton(onPressed: (){
+            Logger().d('리스트에서 삭제 ${widget.item.name}');
+            var _provider ;
+            if (widget.item.storageCategory == '냉장'){
+              _provider = context.read<RefrigeratedProvider>();
+            }
+            if (widget.item.storageCategory == '냉동'){
+              _provider = context.read<FrozenProvider>();
+            }
+            if(widget.item.storageCategory == '실온'){
+              _provider = context.read<NormalProvider>();
+            }
+
+            _provider.removeItem(widget.item);
+            Navigator.pop(context);
+
+
+          }, icon: Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -300,120 +340,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
             const SizedBox(
               height: 40,
             ),
-
-/*            const Text(
-              '카테고리',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColor.onPrimaryColor,
-              ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            const Text(
-              '제품 카테고리를 선택해 주세요.',
-              style: TextStyle(
-                fontSize: 13,
-                color: Color.fromARGB(255, 116, 113, 149),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  // Display a CupertinoPicker with list of fruits.
-                  onPressed: () => _showDialog(
-                    CupertinoPicker(
-                      magnification: 1.22,
-                      squeeze: 1.2,
-                      useMagnifier: true,
-                      itemExtent: _kItemExtent,
-                      // This is called when selected item is changed.
-                      onSelectedItemChanged: (int selectedItem) {
-                        setState(() {
-                          selectedItemCategory = selectedItem;
-                          newItem.itemCategory = itemCategories[selectedItem];
-                        });
-                      },
-                      children: List<Widget>.generate(itemCategories.length,
-                              (int index) {
-                            return Center(
-                              child: Text(
-                                itemCategories[index],
-                              ),
-                            );
-                          }),
-                    ),
-                  ),
-                  // This displays the selected fruit name.
-                  child: Text(
-                    itemCategories[selectedItemCategory],
-                    style: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black // AppColor.onPrimaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-
-            const Text(
-              '제품 이름',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColor.onPrimaryColor,
-              ),
-            ),
-            const SizedBox(
-              height: 3,
-            ),
-            const Text(
-              '제품 이름을 입력해 주세요.',
-              style: TextStyle(
-                fontSize: 13,
-                color: Color.fromARGB(255, 116, 113, 149),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: _nameController,
-              onChanged: (text) {
-                setState(() {
-                  _nameController.text = text;
-                  newItem.name = text;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'name',
-                labelStyle: const TextStyle(
-                  fontSize: 14,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: AppColor.onPrimaryColor,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),*/
+            
 
             const Text(
               '등록 날짜',

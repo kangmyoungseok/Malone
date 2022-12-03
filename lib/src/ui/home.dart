@@ -80,21 +80,16 @@ class _HomeState extends State<Home> {
   late FrozenProvider _frozenProvider;
   late NormalProvider _normalProvider;
   late RefrigeratedProvider _refrigeratedProvider;
-  late final _frozenItemList;
-  late final _normalItemList;
-  late final _refrigeratedItemList;
+
 
   @override
   void didChangeDependencies() {
     print("home : didChangeDep");
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    _frozenProvider = context.watch<FrozenProvider>();
-    _normalProvider = context.watch<NormalProvider>();
-    _refrigeratedProvider = context.watch<RefrigeratedProvider>();
-    _frozenItemList = _frozenProvider.itemList;
-    _normalItemList = _normalProvider.itemList;
-    _refrigeratedItemList = _refrigeratedProvider.itemList;
+    _frozenProvider = context.read<FrozenProvider>();
+    _normalProvider = context.read<NormalProvider>();
+    _refrigeratedProvider = context.read<RefrigeratedProvider>();
   }
 
   int current = 0;

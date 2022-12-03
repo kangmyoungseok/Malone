@@ -5,6 +5,7 @@ import 'package:term_proj2/src/provider/controller_provider.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
 import 'package:term_proj2/src/provider/refrigerated_provider.dart';
+import 'package:term_proj2/src/provider/shopping_provider.dart';
 import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/home.dart';
 import 'package:term_proj2/src/ui/intro_screen.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => RefrigeratedProvider()),
           ChangeNotifierProvider(create: (context) => ControllerProvider()),
           ChangeNotifierProvider(create: (context) => CategoryProvider()),
+          ChangeNotifierProvider(create: (context) => ShoppingProvider()),
         ],
         child: MaterialApp(
           title: 'Malone',
