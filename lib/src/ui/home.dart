@@ -9,7 +9,6 @@ import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/item_info_page.dart';
 import 'package:term_proj2/src/ui/search_page.dart';
 import 'package:term_proj2/src/ui/shopping_list_page.dart';
-import 'package:term_proj2/src/ui/test_page.dart';
 
 import '../model/item.dart';
 import 'add_item_page.dart';
@@ -210,8 +209,6 @@ class _HomeState extends State<Home> {
               ),
               onTap: () {
                 print("설정 클릭");
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TestPage()));
               },
             ),
           ],

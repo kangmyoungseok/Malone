@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../model/item.dart';
@@ -727,15 +728,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     });
                   }
 
-                  print(newItem.storageCategory);
-//                  print(newItem.storageSubCategory);
-                  print(newItem.itemCategory);
-                  print(newItem.name);
-                  print(newItem.enrollDate);
-                  print(newItem.expireDate);
-                  print(newItem.notificationDate);
-                  print(newItem.count);
-                  print(newItem.memo);
+                  Logger().d('addItem ${newItem.itemCategory}');
 
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 

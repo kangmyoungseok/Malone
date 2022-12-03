@@ -43,7 +43,6 @@ dependencies:
   firebase_auth: ^4.1.1
   modal_progress_hud_nsn: ^0.3.0
   cloud_firestore: ^4.0.5
-  multiselect_scope: ^0.2.0
 
 dev_dependencies:
   flutter_test:

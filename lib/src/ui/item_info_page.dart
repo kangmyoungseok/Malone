@@ -208,7 +208,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                                   itemCategories.length, (int index) {
                                 return Center(
                                   child: Text(
-                                    newItem.itemCategory
+                                    itemCategories[index]
                                   ),
                                 );
                               }),
@@ -216,7 +216,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                           ),
                           // This displays the selected fruit name.
                           child: Text(
-                            itemCategories[selectedItemCategory],
+                            newItem.itemCategory,
                             style: const TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.black // AppColor.onPrimaryColor,
