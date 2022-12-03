@@ -6,6 +6,7 @@ import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
 import 'package:term_proj2/src/provider/refrigerated_provider.dart';
 import 'package:term_proj2/src/styles.dart';
+import 'package:term_proj2/src/ui/item_info_page.dart';
 import 'package:term_proj2/src/ui/search_page.dart';
 import 'package:term_proj2/src/ui/shopping_list_page.dart';
 import 'package:term_proj2/src/ui/test_page.dart';
@@ -372,78 +373,83 @@ class _HomeState extends State<Home> {
                           itemList[categoryList[categoryIndex]]![itemIndex];
                       print(itemList[categoryList[categoryIndex]]![itemIndex]
                           .image);
-                      return Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFEFF2F4),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            height: 80,
-                            child: Row(
-                              children: [
-                                Container(
-                                  color: const Color(0xFFEFF2F4),
-                                  width: 20,
-                                  height: 50,
-                                ),
-                                Container(
-                                  width: 30,
-                                  height: 50,
-                                  decoration: BoxDecoration(
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => ItemInfoPage(item: item),));
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFEFF2F4),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              height: 80,
+                              child: Row(
+                                children: [
+                                  Container(
                                     color: const Color(0xFFEFF2F4),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        itemList[categoryList[categoryIndex]]![
-                                                itemIndex]
-                                            .image,
+                                    width: 20,
+                                    height: 50,
+                                  ),
+                                  Container(
+                                    width: 30,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFEFF2F4),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          itemList[categoryList[categoryIndex]]![
+                                                  itemIndex]
+                                              .image,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  color: const Color(0xFFEFF2F4),
-                                  width: 20,
-                                  height: 50,
-                                ),
-                                Container(
-                                  height: 50,
-                                  color: const Color(0xFFEFF2F4),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${itemList[categoryList[categoryIndex]]![itemIndex].name}',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 3,
-                                      ),
-                                      Text(
-                                        itemList[categoryList[categoryIndex]]![
-                                                        itemIndex]
-                                                    .notificationDate !=
-                                                null
-                                            ? 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].notificationDate).difference(DateTime.now()).inDays.toString())}'
-                                            : 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].expireDate).difference(DateTime.now()).inDays.toString())}',
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                                  Container(
+                                    color: const Color(0xFFEFF2F4),
+                                    width: 20,
+                                    height: 50,
                                   ),
-                                ),
-                              ],
+                                  Container(
+                                    height: 50,
+                                    color: const Color(0xFFEFF2F4),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${itemList[categoryList[categoryIndex]]![itemIndex].name}',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          itemList[categoryList[categoryIndex]]![
+                                                          itemIndex]
+                                                      .notificationDate !=
+                                                  null
+                                              ? 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].notificationDate).difference(DateTime.now()).inDays.toString())}'
+                                              : 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].expireDate).difference(DateTime.now()).inDays.toString())}',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       );
                     },
                     itemCount: itemList[categoryList[categoryIndex]]!.length,

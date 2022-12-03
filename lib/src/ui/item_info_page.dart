@@ -8,23 +8,18 @@ import '../provider/controller_provider.dart';
 import 'home.dart';
 import '../styles.dart';
 
-class AddItemPage extends StatefulWidget {
-  final String name;
-  final String itemCategory;
-  final String img;
-  const AddItemPage(
-      {Key? key,
-      required String this.itemCategory,
-      required String this.name,
-      required String this.img})
-      : super(key: key);
+class ItemInfoPage extends StatefulWidget {
+  final Item item;
+
+  const ItemInfoPage({Key? key,required Item this.item}) : super(key: key);
 
   @override
-  State<AddItemPage> createState() => _AddItemPageState();
+  State<ItemInfoPage> createState() => _ItemInfoPageState();
 }
 
-class _AddItemPageState extends State<AddItemPage> {
+class _ItemInfoPageState extends State<ItemInfoPage> {
   final double _kItemExtent = 32.0;
+  late Item newItem;
 
   late String img;
   late String itemCategory;
@@ -41,18 +36,8 @@ class _AddItemPageState extends State<AddItemPage> {
   int count = 0;
   String memo = "";
   TextEditingController _nameController = TextEditingController();
-
-  Item newItem = Item(
-    itemCategory: "빵류",
-    name: "",
-    enrollDate: DateFormat('yyyyMMdd').format(DateTime.now()),
-    expireDate: DateFormat('yyyyMMdd').format(DateTime.now()),
-    count: 0,
-    memo: "",
-    notificationDate: DateFormat('yyyyMMdd').format(DateTime.now()),
-    storageCategory: "냉장",
-    image: '',
-  );
+  TextEditingController _countController = TextEditingController();
+  TextEditingController _memoController = TextEditingController();
 
   List<String> storages = [
     '냉장',
@@ -97,23 +82,33 @@ class _AddItemPageState extends State<AddItemPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.name);
-    print(widget.itemCategory);
-    selectedItemCategory = itemCategories.indexOf(widget.itemCategory);
-    _nameController.text = widget.name;
-    newItem.name = widget.name;
-    newItem.itemCategory = itemCategories[selectedItemCategory];
-    newItem.image = widget.img;
+    newItem = widget.item;
+    _nameController.text = newItem.name;
+    if(newItem.storageCategory == '냉장'){
+      selectedStorage = 0;
+    }
+    if(newItem.storageCategory == '냉동'){
+      selectedStorage = 1;
+    }
+    if(newItem.storageCategory == '실온' ){
+     selectedStorage = 2;
+    }
+
+    _memoController.text = newItem.memo;
+    _countController.text = newItem.count.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-    newItem.image = widget.img;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
-        title: const Text("새로운 식품"),
+        title: const Text("음식 정보"),
         foregroundColor: AppColor.onPrimaryColor,
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
+          IconButton(onPressed: (){}, icon: Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
+        ],
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -130,7 +125,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     border: Border.all(
                         color: Colors.grey.withOpacity(0.5), width: 2),
                     borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(image: AssetImage(widget.img)),
+                    image: DecorationImage(image: AssetImage(newItem.image)),
                   ),
                 ), // 이미지
                 const SizedBox(
@@ -149,16 +144,6 @@ class _AddItemPageState extends State<AddItemPage> {
                     const SizedBox(
                       height: 3,
                     ),
-                    /*                   const Text(
-                      '제품 카테고리를 선택해 주세요.',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Color.fromARGB(255, 116, 113, 149),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),*/
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -176,14 +161,14 @@ class _AddItemPageState extends State<AddItemPage> {
                                 setState(() {
                                   selectedItemCategory = selectedItem;
                                   newItem.itemCategory =
-                                      itemCategories[selectedItem];
+                                  itemCategories[selectedItem];
                                 });
                               },
                               children: List<Widget>.generate(
                                   itemCategories.length, (int index) {
                                 return Center(
                                   child: Text(
-                                    itemCategories[index],
+                                    newItem.itemCategory
                                   ),
                                 );
                               }),
@@ -195,7 +180,7 @@ class _AddItemPageState extends State<AddItemPage> {
                             style: const TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.black // AppColor.onPrimaryColor,
-                                ),
+                            ),
                           ),
                         ),
                       ],
@@ -204,7 +189,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       height: 40,
                     ),
                     const Text(
-                      '제품 이름',
+                      '음식 이름',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -292,7 +277,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         });
                       },
                       children:
-                          List<Widget>.generate(storages.length, (int index) {
+                      List<Widget>.generate(storages.length, (int index) {
                         return Center(
                           child: Text(
                             storages[index],
@@ -307,7 +292,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black // AppColor.onPrimaryColor,
-                        ),
+                    ),
                   ),
                 ),
               ],
@@ -463,7 +448,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       enrollDateTime = newDate;
                       enrollDate =
-                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                       newItem.enrollDate =
                           DateFormat('yyyyMMdd').format(enrollDateTime);
                     });
@@ -516,7 +501,7 @@ class _AddItemPageState extends State<AddItemPage> {
                     setState(() {
                       expireDateTime = newDate;
                       expireDate =
-                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                       newItem.expireDate =
                           DateFormat('yyyyMMdd').format(expireDateTime);
                     });
@@ -526,7 +511,7 @@ class _AddItemPageState extends State<AddItemPage> {
               // In this example, the date value is formatted manually. You can use intl package
               // to format the value based on user's locale settings.
               child: Text(
-                '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}',
+                '${newItem.expireDate.substring(0,4)}/${newItem.expireDate.substring(4,6)}/${newItem.expireDate.substring(6,8)}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22.0,
@@ -572,7 +557,7 @@ class _AddItemPageState extends State<AddItemPage> {
                         setState(() {
                           notificationDateTime = newDate;
                           notificationDate =
-                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                           newItem.notificationDate = DateFormat('yyyyMMdd')
                               .format(notificationDateTime);
                         });
@@ -626,9 +611,10 @@ class _AddItemPageState extends State<AddItemPage> {
               height: 20,
             ),
             TextField(
+              controller: _countController,
               onChanged: (text) {
                 setState(() {
-                  newItem.count = int.parse(text);
+                  _countController.text = text;
                 });
               },
               decoration: InputDecoration(
@@ -672,9 +658,10 @@ class _AddItemPageState extends State<AddItemPage> {
               height: 20,
             ),
             TextField(
+              controller: _memoController,
               onChanged: (text) {
                 setState(() {
-                  newItem.memo = text;
+                  _memoController.text = text;
                 });
               },
               decoration: InputDecoration(
@@ -727,25 +714,15 @@ class _AddItemPageState extends State<AddItemPage> {
                     });
                   }
 
-                  print(newItem.storageCategory);
-//                  print(newItem.storageSubCategory);
-                  print(newItem.itemCategory);
-                  print(newItem.name);
-                  print(newItem.enrollDate);
-                  print(newItem.expireDate);
-                  print(newItem.notificationDate);
-                  print(newItem.count);
-                  print(newItem.memo);
-
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 
                   ControllerProvider _controller =
-                      Provider.of<ControllerProvider>(context, listen: false);
+                  Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
-                child: const Text("등록하기"),
+                child: const Text("수정하기"),
               ),
             ),
           ],
