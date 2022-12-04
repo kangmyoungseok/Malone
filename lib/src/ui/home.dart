@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:term_proj2/src/model/sqliteModel.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
 import 'package:term_proj2/src/provider/refrigerated_provider.dart';
+import 'package:term_proj2/src/provider/shopping_provider.dart';
 import 'package:term_proj2/src/styles.dart';
 import 'package:term_proj2/src/ui/item_info_page.dart';
 import 'package:term_proj2/src/ui/search_page.dart';
@@ -23,6 +25,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int screenIndex = 0;
+  var sqlModel = SqliteModel();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -31,16 +34,45 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sqlModel.getAllItemList().then(
+            (itemList){
+          for(var item in itemList){
+            if(item.storageCategory == '냉장'){
+              context.read<RefrigeratedProvider>().insertItem(item);
+            }
+            if(item.storageCategory == '냉동'){
+              context.read<FrozenProvider>().insertItem(item);
+            }
+            if(item.storageCategory == '실온'){
+              context.read<NormalProvider>().insertItem(item);
+            }
+          }
+        }
+    );
+
+    sqlModel.getAllShoppingList().then(
+            (shoppingList){
+          for (var shopping in shoppingList){
+            context.read<ShoppingProvider>().add(shopping.name);
+          }
+        }
+    );
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    List<Widget> _widgetOptions = <Widget>[
+    List<Widget> widgetOptions = <Widget>[
       Home(),
-//      const AddItemPage(),
       const CategoryPage(),
       const ShoppingListPage(),
     ];
 
     return Scaffold(
-      body: _widgetOptions.elementAt(screenIndex),
+      body: widgetOptions.elementAt(screenIndex),
       bottomNavigationBar: BottomNavigationBar(
         // backgroundColor: Colors.black,
         currentIndex: screenIndex,
@@ -76,21 +108,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final TextEditingController _searchText = TextEditingController();
-  late FrozenProvider _frozenProvider;
-  late NormalProvider _normalProvider;
-  late RefrigeratedProvider _refrigeratedProvider;
-
-
-  @override
-  void didChangeDependencies() {
-    print("home : didChangeDep");
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    _frozenProvider = context.read<FrozenProvider>();
-    _normalProvider = context.read<NormalProvider>();
-    _refrigeratedProvider = context.read<RefrigeratedProvider>();
-  }
-
   int current = 0;
 
   @override
@@ -331,12 +348,12 @@ class _HomeState extends State<Home> {
       );
     } else {
       // total이 >0 이면, 리스트
-      int category_num = 0;
+      int categoryNum = 0;
       List categoryList = [];
       for (var category in itemList.keys) {
         if (itemList[category]!.isNotEmpty) {
           // 공백이 아닌 카테고리 수 출력
-          category_num++;
+          categoryNum++;
           categoryList.add(category);
         }
       }
@@ -459,7 +476,7 @@ class _HomeState extends State<Home> {
                 thickness: 2,
               );
             },
-            itemCount: category_num),
+            itemCount: categoryNum),
       );
     }
   }

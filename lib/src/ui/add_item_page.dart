@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:term_proj2/src/model/sqliteModel.dart';
 
 import '../model/item.dart';
 import '../provider/controller_provider.dart';
@@ -735,6 +736,9 @@ class _AddItemPageState extends State<AddItemPage> {
                   ControllerProvider _controller =
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
+
+                  var sqlModel = SqliteModel();
+                  sqlModel.insertItem(newItem);
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },

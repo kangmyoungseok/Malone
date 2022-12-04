@@ -27,4 +27,17 @@ class Item {
 //    this.storageSubCategory,
   required this.image
   });
+
+
+  Map<String, dynamic> toMap() => {
+    'itemCategory': itemCategory,
+    'name': name,
+    'enrollDate': enrollDate,
+    'expireDate': expireDate,
+    'notificationDate': notificationDate,
+    'count': count,
+    'memo': memo,
+    'storageCategory': storageCategory,
+    'image': image
+  };
 }

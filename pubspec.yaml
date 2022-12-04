@@ -43,6 +43,8 @@ dependencies:
   firebase_auth: ^4.1.1
   modal_progress_hud_nsn: ^0.3.0
   cloud_firestore: ^4.0.5
+  sqflite: ^2.2.1
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:term_proj2/src/model/sqliteModel.dart';
 import 'package:term_proj2/src/provider/frozen_provider.dart';
 import 'package:term_proj2/src/provider/normal_provider.dart';
 import 'package:term_proj2/src/provider/refrigerated_provider.dart';
@@ -23,6 +24,8 @@ class ItemInfoPage extends StatefulWidget {
 }
 
 class _ItemInfoPageState extends State<ItemInfoPage> {
+
+  var sqlModel = SqliteModel();
   final double _kItemExtent = 32.0;
   late Item newItem;
 
@@ -127,9 +130,14 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
             _provider.removeItem(widget.item);
             context.read<ShoppingProvider>().add(widget.item.name);
+            sqlModel.deleteItem(widget.item.name);
+            sqlModel.insertShopping(Shopping(name: widget.item.name, isSelected: false));
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("장바구니 목록에 추가하였습니다.",),duration: Duration(seconds: 1),)
+            );
             Navigator.pop(context);
 
-          }, icon: Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
+          }, icon: const Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
           IconButton(onPressed: (){
             Logger().d('리스트에서 삭제 ${widget.item.name}');
             var _provider ;
@@ -142,12 +150,17 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
             if(widget.item.storageCategory == '실온'){
               _provider = context.read<NormalProvider>();
             }
-
+            sqlModel.deleteItem(widget.item.name);
             _provider.removeItem(widget.item);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("음식을 삭제하였습니다.",),duration: Duration(seconds: 1),)
+            );
+
             Navigator.pop(context);
 
 
-          }, icon: Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
+          }, icon: const Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -643,9 +656,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 
-                  ControllerProvider _controller =
-                  Provider.of<ControllerProvider>(context, listen: false);
-                  _controller.insertItem(newItem);
+                  //ControllerProvider _controller =
+                  //Provider.of<ControllerProvider>(context, listen: false);
+                  //_controller.insertItem(newItem);
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },

@@ -123,7 +123,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         setState(() {
           shoppingList[index].isSelected = !shoppingList[index].isSelected;
           if (shoppingList[index].isSelected == true) {
-            selectedList.add(Shopping(name, true));
+            selectedList.add(Shopping(name: name,isSelected: true));
           } else {
             selectedList.removeWhere(
                 (element) => element.name == shoppingList[index].name);
