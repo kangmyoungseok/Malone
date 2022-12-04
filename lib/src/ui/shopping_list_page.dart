@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:term_proj2/src/interface/controller.dart';
 import 'package:term_proj2/src/provider/shopping_provider.dart';
 
+import '../model/sqliteModel.dart';
 import '../styles.dart';
 
 class ShoppingListPage extends StatefulWidget {
@@ -64,6 +65,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           ),
                           onPressed: () {
                             setState(() {
+                              for(var item in shoppingList){
+                                if(item.isSelected){
+                                  var sqlModel = SqliteModel();
+                                  sqlModel.deleteShopping(item.name);
+                                }
+                              }
+
                               shoppingList.removeWhere(
                                   (element) => element.isSelected == true);
                               selectedList.clear();
@@ -152,6 +160,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   );
 
   void submit(){
+    var sqlModel = SqliteModel();
+    sqlModel.insertShopping(Shopping(name: controller.text, isSelected: false));
     context.read<ShoppingProvider>().add(controller.text);
     controller.clear();
     Navigator.pop(context);
