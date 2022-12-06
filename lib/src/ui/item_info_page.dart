@@ -224,6 +224,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                               // This is called when selected item is changed.
                               onSelectedItemChanged: (int selectedItem) {
                                 setState(() {
+                                  /*
                                   var _provider;
                                   if (widget.item.storageCategory == '냉장') {
                                     _provider =
@@ -238,6 +239,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                                   sqlModel.deleteItem(widget.item.name);
                                   _provider.removeItem(widget.item);
+                                  */
 
                                   selectedItemCategory = selectedItem;
                                   newItem.itemCategory =
@@ -284,6 +286,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                         controller: _nameController,
                         onChanged: (text) {
                           setState(() {
+                            /*
                             var _provider;
                             if (widget.item.storageCategory == '냉장') {
                               _provider = context.read<RefrigeratedProvider>();
@@ -297,6 +300,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                             sqlModel.deleteItem(widget.item.name);
                             _provider.removeItem(widget.item);
+                            */
 
                             _nameController.text = text;
                             newItem.name = text;
@@ -364,6 +368,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when selected item is changed.
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
+                          /*
                           var _provider;
                           print(widget.item.storageCategory);
                           if (widget.item.storageCategory == '냉장') {
@@ -378,6 +383,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                           sqlModel.deleteItem(widget.item.name);
                           _provider.removeItem(widget.item);
+                          */
 
                           selectedStorage = selectedItem;
                           newItem.storageCategory = storages[selectedItem];
@@ -439,6 +445,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
+                      /*
                       var _provider;
                       if (widget.item.storageCategory == '냉장') {
                         _provider = context.read<RefrigeratedProvider>();
@@ -452,6 +459,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                       sqlModel.deleteItem(widget.item.name);
                       _provider.removeItem(widget.item);
+                      */
 
                       enrollDateTime = newDate;
                       enrollDate =
@@ -506,6 +514,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
+                      /*
                       var _provider;
                       if (widget.item.storageCategory == '냉장') {
                         _provider = context.read<RefrigeratedProvider>();
@@ -519,6 +528,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                       sqlModel.deleteItem(widget.item.name);
                       _provider.removeItem(widget.item);
+                      */
 
                       expireDateTime = newDate;
                       expireDate =
@@ -576,6 +586,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when the user changes the date.
                       onDateTimeChanged: (DateTime newDate) {
                         setState(() {
+                          /*
                           var _provider;
                           if (widget.item.storageCategory == '냉장') {
                             _provider = context.read<RefrigeratedProvider>();
@@ -589,6 +600,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                           sqlModel.deleteItem(widget.item.name);
                           _provider.removeItem(widget.item);
+                          */
 
                           notificationDateTime = newDate;
                           notificationDate =
@@ -615,6 +627,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       : const Icon(Icons.alarm_off),
                   onPressed: () {
                     setState(() {
+                      /*
                       var _provider;
                       if (widget.item.storageCategory == '냉장') {
                         _provider = context.read<RefrigeratedProvider>();
@@ -628,6 +641,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                       sqlModel.deleteItem(widget.item.name);
                       _provider.removeItem(widget.item);
+                      */
 
                       whetherNotify = !whetherNotify;
                     });
@@ -663,6 +677,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _countController,
               onChanged: (text) {
                 setState(() {
+                  /*
                   var _provider;
                   if (widget.item.storageCategory == '냉장') {
                     _provider = context.read<RefrigeratedProvider>();
@@ -676,6 +691,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                   sqlModel.deleteItem(widget.item.name);
                   _provider.removeItem(widget.item);
+                  */
 
                   _countController.text = text;
                 });
@@ -724,6 +740,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _memoController,
               onChanged: (text) {
                 setState(() {
+                  /*
                   var _provider;
                   if (widget.item.storageCategory == '냉장') {
                     _provider = context.read<RefrigeratedProvider>();
@@ -737,6 +754,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
 
                   sqlModel.deleteItem(widget.item.name);
                   _provider.removeItem(widget.item);
+                  */
 
                   _memoController.text = text;
                 });
