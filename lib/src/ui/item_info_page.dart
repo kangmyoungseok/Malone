@@ -25,6 +25,7 @@ class ItemInfoPage extends StatefulWidget {
 
 class _ItemInfoPageState extends State<ItemInfoPage> {
   var sqlModel = SqliteModel();
+  var before_provider;
   final double _kItemExtent = 32.0;
   late Item newItem;
 
@@ -89,6 +90,15 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (widget.item.storageCategory == '냉장') {
+      before_provider = context.read<RefrigeratedProvider>();
+    }
+    if (widget.item.storageCategory == '냉동') {
+      before_provider = context.read<FrozenProvider>();
+    }
+    if (widget.item.storageCategory == '실온') {
+      before_provider = context.read<NormalProvider>();
+    }
     newItem = widget.item;
     _nameController.text = newItem.name;
     if (newItem.storageCategory == '냉장') {
@@ -101,12 +111,48 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
       selectedStorage = 2;
     }
 
+    if (newItem.itemCategory == '빵류') {
+      selectedItemCategory = 0;
+    }
+    if (newItem.itemCategory == '조미료') {
+      selectedItemCategory = 1;
+    }
+    if (newItem.itemCategory == '유제품') {
+      selectedItemCategory = 2;
+    }
+    if (newItem.itemCategory == '디저트') {
+      selectedItemCategory = 3;
+    }
+    if (newItem.itemCategory == '요리') {
+      selectedItemCategory = 4;
+    }
+    if (newItem.itemCategory == '음료') {
+      selectedItemCategory = 5;
+    }
+    if (newItem.itemCategory == '과일') {
+      selectedItemCategory = 6;
+    }
+    if (newItem.itemCategory == '기타') {
+      selectedItemCategory = 7;
+    }
+
+    enrollDate =
+        '${newItem.enrollDate.substring(0, 4)}/${newItem.enrollDate.substring(4, 6)}/${newItem.enrollDate.substring(6, 8)}';
+    expireDate =
+        '${newItem.expireDate.substring(0, 4)}/${newItem.expireDate.substring(4, 6)}/${newItem.expireDate.substring(6, 8)}';
+    if (newItem.notificationDate != null) {
+      notificationDate =
+          '${newItem.notificationDate!.substring(0, 4)}/${newItem.notificationDate!.substring(4, 6)}/${newItem.notificationDate!.substring(6, 8)}';
+    }
+
     _memoController.text = newItem.memo;
     _countController.text = newItem.count.toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    //var before_provider;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.primaryColor,
@@ -224,26 +270,10 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                               // This is called when selected item is changed.
                               onSelectedItemChanged: (int selectedItem) {
                                 setState(() {
-                                  /*
-                                  var _provider;
-                                  if (widget.item.storageCategory == '냉장') {
-                                    _provider =
-                                        context.read<RefrigeratedProvider>();
-                                  }
-                                  if (widget.item.storageCategory == '냉동') {
-                                    _provider = context.read<FrozenProvider>();
-                                  }
-                                  if (widget.item.storageCategory == '실온') {
-                                    _provider = context.read<NormalProvider>();
-                                  }
-
-                                  sqlModel.deleteItem(widget.item.name);
-                                  _provider.removeItem(widget.item);
-                                  */
-
+                                  // before_provider.removeItem(widget.item);
                                   selectedItemCategory = selectedItem;
-                                  newItem.itemCategory =
-                                      itemCategories[selectedItem];
+                                  // newItem.itemCategory =
+                                  // itemCategories[selectedItem];
                                 });
                               },
                               children: List<Widget>.generate(
@@ -256,7 +286,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                           ),
                           // This displays the selected fruit name.
                           child: Text(
-                            newItem.itemCategory,
+                            itemCategories[selectedItemCategory],
                             style: const TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.black // AppColor.onPrimaryColor,
@@ -286,24 +316,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                         controller: _nameController,
                         onChanged: (text) {
                           setState(() {
-                            /*
-                            var _provider;
-                            if (widget.item.storageCategory == '냉장') {
-                              _provider = context.read<RefrigeratedProvider>();
-                            }
-                            if (widget.item.storageCategory == '냉동') {
-                              _provider = context.read<FrozenProvider>();
-                            }
-                            if (widget.item.storageCategory == '실온') {
-                              _provider = context.read<NormalProvider>();
-                            }
-
-                            sqlModel.deleteItem(widget.item.name);
-                            _provider.removeItem(widget.item);
-                            */
-
                             _nameController.text = text;
-                            newItem.name = text;
+                            name = text;
+                            // newItem.name = text;
                           });
                         },
                         decoration: InputDecoration(
@@ -368,25 +383,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when selected item is changed.
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
-                          /*
-                          var _provider;
-                          print(widget.item.storageCategory);
-                          if (widget.item.storageCategory == '냉장') {
-                            _provider = context.read<RefrigeratedProvider>();
-                          }
-                          if (widget.item.storageCategory == '냉동') {
-                            _provider = context.read<FrozenProvider>();
-                          }
-                          if (widget.item.storageCategory == '실온') {
-                            _provider = context.read<NormalProvider>();
-                          }
-
-                          sqlModel.deleteItem(widget.item.name);
-                          _provider.removeItem(widget.item);
-                          */
-
+                          //before_provider.removeItem(widget.item);
                           selectedStorage = selectedItem;
-                          newItem.storageCategory = storages[selectedItem];
+                          // newItem.storageCategory = storages[selectedItem];
                         });
                       },
                       children:
@@ -445,27 +444,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
-                      /*
-                      var _provider;
-                      if (widget.item.storageCategory == '냉장') {
-                        _provider = context.read<RefrigeratedProvider>();
-                      }
-                      if (widget.item.storageCategory == '냉동') {
-                        _provider = context.read<FrozenProvider>();
-                      }
-                      if (widget.item.storageCategory == '실온') {
-                        _provider = context.read<NormalProvider>();
-                      }
-
-                      sqlModel.deleteItem(widget.item.name);
-                      _provider.removeItem(widget.item);
-                      */
-
                       enrollDateTime = newDate;
                       enrollDate =
                           '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
-                      newItem.enrollDate =
-                          DateFormat('yyyyMMdd').format(enrollDateTime);
                     });
                   },
                 ),
@@ -473,7 +454,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               // In this example, the date value is formatted manually. You can use intl package
               // to format the value based on user's locale settings.
               child: Text(
-                '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}',
+                enrollDate,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22.0,
@@ -514,27 +495,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
-                      /*
-                      var _provider;
-                      if (widget.item.storageCategory == '냉장') {
-                        _provider = context.read<RefrigeratedProvider>();
-                      }
-                      if (widget.item.storageCategory == '냉동') {
-                        _provider = context.read<FrozenProvider>();
-                      }
-                      if (widget.item.storageCategory == '실온') {
-                        _provider = context.read<NormalProvider>();
-                      }
-
-                      sqlModel.deleteItem(widget.item.name);
-                      _provider.removeItem(widget.item);
-                      */
-
                       expireDateTime = newDate;
                       expireDate =
                           '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
-                      newItem.expireDate =
-                          DateFormat('yyyyMMdd').format(expireDateTime);
                     });
                   },
                 ),
@@ -542,7 +505,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               // In this example, the date value is formatted manually. You can use intl package
               // to format the value based on user's locale settings.
               child: Text(
-                '${newItem.expireDate.substring(0, 4)}/${newItem.expireDate.substring(4, 6)}/${newItem.expireDate.substring(6, 8)}',
+                expireDate,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22.0,
@@ -586,27 +549,9 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when the user changes the date.
                       onDateTimeChanged: (DateTime newDate) {
                         setState(() {
-                          /*
-                          var _provider;
-                          if (widget.item.storageCategory == '냉장') {
-                            _provider = context.read<RefrigeratedProvider>();
-                          }
-                          if (widget.item.storageCategory == '냉동') {
-                            _provider = context.read<FrozenProvider>();
-                          }
-                          if (widget.item.storageCategory == '실온') {
-                            _provider = context.read<NormalProvider>();
-                          }
-
-                          sqlModel.deleteItem(widget.item.name);
-                          _provider.removeItem(widget.item);
-                          */
-
                           notificationDateTime = newDate;
                           notificationDate =
                               '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
-                          newItem.notificationDate = DateFormat('yyyyMMdd')
-                              .format(notificationDateTime);
                         });
                       },
                     ),
@@ -614,7 +559,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // In this example, the date value is formatted manually. You can use intl package
                   // to format the value based on user's locale settings.
                   child: Text(
-                    '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}',
+                    notificationDate,
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 22.0,
@@ -627,22 +572,6 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       : const Icon(Icons.alarm_off),
                   onPressed: () {
                     setState(() {
-                      /*
-                      var _provider;
-                      if (widget.item.storageCategory == '냉장') {
-                        _provider = context.read<RefrigeratedProvider>();
-                      }
-                      if (widget.item.storageCategory == '냉동') {
-                        _provider = context.read<FrozenProvider>();
-                      }
-                      if (widget.item.storageCategory == '실온') {
-                        _provider = context.read<NormalProvider>();
-                      }
-
-                      sqlModel.deleteItem(widget.item.name);
-                      _provider.removeItem(widget.item);
-                      */
-
                       whetherNotify = !whetherNotify;
                     });
                   },
@@ -677,23 +606,8 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _countController,
               onChanged: (text) {
                 setState(() {
-                  /*
-                  var _provider;
-                  if (widget.item.storageCategory == '냉장') {
-                    _provider = context.read<RefrigeratedProvider>();
-                  }
-                  if (widget.item.storageCategory == '냉동') {
-                    _provider = context.read<FrozenProvider>();
-                  }
-                  if (widget.item.storageCategory == '실온') {
-                    _provider = context.read<NormalProvider>();
-                  }
-
-                  sqlModel.deleteItem(widget.item.name);
-                  _provider.removeItem(widget.item);
-                  */
-
                   _countController.text = text;
+                  count = int.parse(text);
                 });
               },
               decoration: InputDecoration(
@@ -740,23 +654,8 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _memoController,
               onChanged: (text) {
                 setState(() {
-                  /*
-                  var _provider;
-                  if (widget.item.storageCategory == '냉장') {
-                    _provider = context.read<RefrigeratedProvider>();
-                  }
-                  if (widget.item.storageCategory == '냉동') {
-                    _provider = context.read<FrozenProvider>();
-                  }
-                  if (widget.item.storageCategory == '실온') {
-                    _provider = context.read<NormalProvider>();
-                  }
-
-                  sqlModel.deleteItem(widget.item.name);
-                  _provider.removeItem(widget.item);
-                  */
-
                   _memoController.text = text;
+                  memo = text;
                 });
               },
               decoration: InputDecoration(
@@ -784,8 +683,6 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: AppColor.onPrimaryColor,
-
-                  // textColor: Colors.white,
                 ),
                 onPressed: () {
                   if (whetherNotify == false) {
@@ -794,31 +691,26 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                     });
                   }
 
-                  /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
-
-                  //ControllerProvider _controller =
-                  //Provider.of<ControllerProvider>(context, listen: false);
-                  //_controller.insertItem(newItem);
-
-                  var _provider;
-                  if (widget.item.storageCategory == '냉장') {
-                    _provider = context.read<RefrigeratedProvider>();
-                  }
-                  if (widget.item.storageCategory == '냉동') {
-                    _provider = context.read<FrozenProvider>();
-                  }
-                  if (widget.item.storageCategory == '실온') {
-                    _provider = context.read<NormalProvider>();
-                  }
-
-                  sqlModel.deleteItem(widget.item.name);
-                  _provider.removeItem(widget.item);
+                  setState(() {
+                    sqlModel.deleteItem(widget.item.name);
+                    before_provider.removeItem(widget.item);
+                    newItem.itemCategory = itemCategories[selectedItemCategory];
+                    newItem.name = _nameController.text;
+                    newItem.storageCategory = storages[selectedStorage];
+                    newItem.enrollDate =
+                        '${enrollDate.substring(0, 4)}${enrollDate.substring(5, 7)}${enrollDate.substring(8, 10)}';
+                    newItem.expireDate =
+                        '${expireDate.substring(0, 4)}${expireDate.substring(5, 7)}${expireDate.substring(8, 10)}';
+                    newItem.notificationDate =
+                        '${notificationDate.substring(0, 4)}${notificationDate.substring(5, 7)}${notificationDate.substring(8, 10)}';
+                    newItem.count = int.parse(_countController.text);
+                    newItem.memo = _memoController.text;
+                  });
 
                   ControllerProvider _controller =
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
 
-                  // var sqlModel = SqliteModel();
                   sqlModel.insertItem(newItem);
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
