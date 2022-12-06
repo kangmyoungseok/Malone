@@ -158,6 +158,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                 if (widget.item.storageCategory == '실온') {
                   _provider = context.read<NormalProvider>();
                 }
+
                 sqlModel.deleteItem(widget.item.name);
                 _provider.removeItem(widget.item);
 
@@ -223,6 +224,21 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                               // This is called when selected item is changed.
                               onSelectedItemChanged: (int selectedItem) {
                                 setState(() {
+                                  var _provider;
+                                  if (widget.item.storageCategory == '냉장') {
+                                    _provider =
+                                        context.read<RefrigeratedProvider>();
+                                  }
+                                  if (widget.item.storageCategory == '냉동') {
+                                    _provider = context.read<FrozenProvider>();
+                                  }
+                                  if (widget.item.storageCategory == '실온') {
+                                    _provider = context.read<NormalProvider>();
+                                  }
+
+                                  sqlModel.deleteItem(widget.item.name);
+                                  _provider.removeItem(widget.item);
+
                                   selectedItemCategory = selectedItem;
                                   newItem.itemCategory =
                                       itemCategories[selectedItem];
@@ -268,6 +284,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                         controller: _nameController,
                         onChanged: (text) {
                           setState(() {
+                            var _provider;
+                            if (widget.item.storageCategory == '냉장') {
+                              _provider = context.read<RefrigeratedProvider>();
+                            }
+                            if (widget.item.storageCategory == '냉동') {
+                              _provider = context.read<FrozenProvider>();
+                            }
+                            if (widget.item.storageCategory == '실온') {
+                              _provider = context.read<NormalProvider>();
+                            }
+
+                            sqlModel.deleteItem(widget.item.name);
+                            _provider.removeItem(widget.item);
+
                             _nameController.text = text;
                             newItem.name = text;
                           });
@@ -409,6 +439,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
+                      var _provider;
+                      if (widget.item.storageCategory == '냉장') {
+                        _provider = context.read<RefrigeratedProvider>();
+                      }
+                      if (widget.item.storageCategory == '냉동') {
+                        _provider = context.read<FrozenProvider>();
+                      }
+                      if (widget.item.storageCategory == '실온') {
+                        _provider = context.read<NormalProvider>();
+                      }
+
+                      sqlModel.deleteItem(widget.item.name);
+                      _provider.removeItem(widget.item);
+
                       enrollDateTime = newDate;
                       enrollDate =
                           '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
@@ -462,6 +506,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   // This is called when the user changes the date.
                   onDateTimeChanged: (DateTime newDate) {
                     setState(() {
+                      var _provider;
+                      if (widget.item.storageCategory == '냉장') {
+                        _provider = context.read<RefrigeratedProvider>();
+                      }
+                      if (widget.item.storageCategory == '냉동') {
+                        _provider = context.read<FrozenProvider>();
+                      }
+                      if (widget.item.storageCategory == '실온') {
+                        _provider = context.read<NormalProvider>();
+                      }
+
+                      sqlModel.deleteItem(widget.item.name);
+                      _provider.removeItem(widget.item);
+
                       expireDateTime = newDate;
                       expireDate =
                           '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
@@ -518,6 +576,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when the user changes the date.
                       onDateTimeChanged: (DateTime newDate) {
                         setState(() {
+                          var _provider;
+                          if (widget.item.storageCategory == '냉장') {
+                            _provider = context.read<RefrigeratedProvider>();
+                          }
+                          if (widget.item.storageCategory == '냉동') {
+                            _provider = context.read<FrozenProvider>();
+                          }
+                          if (widget.item.storageCategory == '실온') {
+                            _provider = context.read<NormalProvider>();
+                          }
+
+                          sqlModel.deleteItem(widget.item.name);
+                          _provider.removeItem(widget.item);
+
                           notificationDateTime = newDate;
                           notificationDate =
                               '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
@@ -543,6 +615,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       : const Icon(Icons.alarm_off),
                   onPressed: () {
                     setState(() {
+                      var _provider;
+                      if (widget.item.storageCategory == '냉장') {
+                        _provider = context.read<RefrigeratedProvider>();
+                      }
+                      if (widget.item.storageCategory == '냉동') {
+                        _provider = context.read<FrozenProvider>();
+                      }
+                      if (widget.item.storageCategory == '실온') {
+                        _provider = context.read<NormalProvider>();
+                      }
+
+                      sqlModel.deleteItem(widget.item.name);
+                      _provider.removeItem(widget.item);
+
                       whetherNotify = !whetherNotify;
                     });
                   },
@@ -577,6 +663,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _countController,
               onChanged: (text) {
                 setState(() {
+                  var _provider;
+                  if (widget.item.storageCategory == '냉장') {
+                    _provider = context.read<RefrigeratedProvider>();
+                  }
+                  if (widget.item.storageCategory == '냉동') {
+                    _provider = context.read<FrozenProvider>();
+                  }
+                  if (widget.item.storageCategory == '실온') {
+                    _provider = context.read<NormalProvider>();
+                  }
+
+                  sqlModel.deleteItem(widget.item.name);
+                  _provider.removeItem(widget.item);
+
                   _countController.text = text;
                 });
               },
@@ -624,6 +724,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               controller: _memoController,
               onChanged: (text) {
                 setState(() {
+                  var _provider;
+                  if (widget.item.storageCategory == '냉장') {
+                    _provider = context.read<RefrigeratedProvider>();
+                  }
+                  if (widget.item.storageCategory == '냉동') {
+                    _provider = context.read<FrozenProvider>();
+                  }
+                  if (widget.item.storageCategory == '실온') {
+                    _provider = context.read<NormalProvider>();
+                  }
+
+                  sqlModel.deleteItem(widget.item.name);
+                  _provider.removeItem(widget.item);
+
                   _memoController.text = text;
                 });
               },
