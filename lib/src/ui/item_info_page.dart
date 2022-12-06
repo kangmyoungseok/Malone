@@ -782,6 +782,20 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                   //Provider.of<ControllerProvider>(context, listen: false);
                   //_controller.insertItem(newItem);
 
+                  var _provider;
+                  if (widget.item.storageCategory == '냉장') {
+                    _provider = context.read<RefrigeratedProvider>();
+                  }
+                  if (widget.item.storageCategory == '냉동') {
+                    _provider = context.read<FrozenProvider>();
+                  }
+                  if (widget.item.storageCategory == '실온') {
+                    _provider = context.read<NormalProvider>();
+                  }
+
+                  sqlModel.deleteItem(widget.item.name);
+                  _provider.removeItem(widget.item);
+
                   ControllerProvider _controller =
                       Provider.of<ControllerProvider>(context, listen: false);
                   _controller.insertItem(newItem);
