@@ -290,7 +290,7 @@ class _AddItemPageState extends State<AddItemPage> {
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
                           selectedStorage = selectedItem;
-                          // newItem.storageCategory = storages[selectedItem];
+                          newItem.storageCategory = storages[selectedItem];
                         });
                       },
                       children:

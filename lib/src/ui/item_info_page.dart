@@ -17,14 +17,13 @@ import '../styles.dart';
 class ItemInfoPage extends StatefulWidget {
   final Item item;
 
-  const ItemInfoPage({Key? key,required Item this.item}) : super(key: key);
+  const ItemInfoPage({Key? key, required /*Item*/ this.item}) : super(key: key);
 
   @override
   State<ItemInfoPage> createState() => _ItemInfoPageState();
 }
 
 class _ItemInfoPageState extends State<ItemInfoPage> {
-
   var sqlModel = SqliteModel();
   final double _kItemExtent = 32.0;
   late Item newItem;
@@ -92,14 +91,14 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
     super.initState();
     newItem = widget.item;
     _nameController.text = newItem.name;
-    if(newItem.storageCategory == '냉장'){
+    if (newItem.storageCategory == '냉장') {
       selectedStorage = 0;
     }
-    if(newItem.storageCategory == '냉동'){
+    if (newItem.storageCategory == '냉동') {
       selectedStorage = 1;
     }
-    if(newItem.storageCategory == '실온' ){
-     selectedStorage = 2;
+    if (newItem.storageCategory == '실온') {
+      selectedStorage = 2;
     }
 
     _memoController.text = newItem.memo;
@@ -114,53 +113,65 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
         title: const Text("음식 정보"),
         foregroundColor: AppColor.onPrimaryColor,
         actions: [
-          IconButton(onPressed: (){
-            // 해당 아이템이 들어있는 배열을 찾는다.
-            Logger().d('쇼핑카트 추가  ${widget.item.name}');
-            var _provider ;
-            if (widget.item.storageCategory == '냉장'){
-              _provider = context.read<RefrigeratedProvider>();
-            }
-            if (widget.item.storageCategory == '냉동'){
-              _provider = context.read<FrozenProvider>();
-            }
-            if(widget.item.storageCategory == '실온'){
-              _provider = context.read<NormalProvider>();
-            }
+          IconButton(
+              onPressed: () {
+                // 해당 아이템이 들어있는 배열을 찾는다.
+                Logger().d('쇼핑카트 추가  ${widget.item.name}');
+                var _provider;
+                if (widget.item.storageCategory == '냉장') {
+                  _provider = context.read<RefrigeratedProvider>();
+                }
+                if (widget.item.storageCategory == '냉동') {
+                  _provider = context.read<FrozenProvider>();
+                }
+                if (widget.item.storageCategory == '실온') {
+                  _provider = context.read<NormalProvider>();
+                }
 
-            _provider.removeItem(widget.item);
-            context.read<ShoppingProvider>().add(widget.item.name);
-            sqlModel.deleteItem(widget.item.name);
-            sqlModel.insertShopping(Shopping(name: widget.item.name, isSelected: false));
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("장바구니 목록에 추가하였습니다.",),duration: Duration(seconds: 1),)
-            );
-            Navigator.pop(context);
+                _provider.removeItem(widget.item);
+                context.read<ShoppingProvider>().add(widget.item.name);
+                sqlModel.deleteItem(widget.item.name);
+                sqlModel.insertShopping(
+                    Shopping(name: widget.item.name, isSelected: false));
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                    "장바구니 목록에 추가하였습니다.",
+                  ),
+                  duration: Duration(seconds: 1),
+                ));
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+                color: AppColor.onPrimaryColor,
+              )),
+          IconButton(
+              onPressed: () {
+                Logger().d('리스트에서 삭제 ${widget.item.name}');
+                var _provider;
+                if (widget.item.storageCategory == '냉장') {
+                  _provider = context.read<RefrigeratedProvider>();
+                }
+                if (widget.item.storageCategory == '냉동') {
+                  _provider = context.read<FrozenProvider>();
+                }
+                if (widget.item.storageCategory == '실온') {
+                  _provider = context.read<NormalProvider>();
+                }
+                sqlModel.deleteItem(widget.item.name);
+                _provider.removeItem(widget.item);
 
-          }, icon: const Icon(Icons.shopping_cart,color: AppColor.onPrimaryColor,)),
-          IconButton(onPressed: (){
-            Logger().d('리스트에서 삭제 ${widget.item.name}');
-            var _provider ;
-            if (widget.item.storageCategory == '냉장'){
-              _provider = context.read<RefrigeratedProvider>();
-            }
-            if (widget.item.storageCategory == '냉동'){
-              _provider = context.read<FrozenProvider>();
-            }
-            if(widget.item.storageCategory == '실온'){
-              _provider = context.read<NormalProvider>();
-            }
-            sqlModel.deleteItem(widget.item.name);
-            _provider.removeItem(widget.item);
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                    "음식을 삭제하였습니다.",
+                  ),
+                  duration: Duration(seconds: 1),
+                ));
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("음식을 삭제하였습니다.",),duration: Duration(seconds: 1),)
-            );
-
-            Navigator.pop(context);
-
-
-          }, icon: const Icon(Icons.delete_forever,color: AppColor.onPrimaryColor)),
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.delete_forever,
+                  color: AppColor.onPrimaryColor)),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -214,15 +225,13 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                                 setState(() {
                                   selectedItemCategory = selectedItem;
                                   newItem.itemCategory =
-                                  itemCategories[selectedItem];
+                                      itemCategories[selectedItem];
                                 });
                               },
                               children: List<Widget>.generate(
                                   itemCategories.length, (int index) {
                                 return Center(
-                                  child: Text(
-                                    itemCategories[index]
-                                  ),
+                                  child: Text(itemCategories[index]),
                                 );
                               }),
                             ),
@@ -233,7 +242,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                             style: const TextStyle(
                                 fontSize: 20.0,
                                 color: Colors.black // AppColor.onPrimaryColor,
-                            ),
+                                ),
                           ),
                         ),
                       ],
@@ -325,12 +334,27 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                       // This is called when selected item is changed.
                       onSelectedItemChanged: (int selectedItem) {
                         setState(() {
+                          var _provider;
+                          print(widget.item.storageCategory);
+                          if (widget.item.storageCategory == '냉장') {
+                            _provider = context.read<RefrigeratedProvider>();
+                          }
+                          if (widget.item.storageCategory == '냉동') {
+                            _provider = context.read<FrozenProvider>();
+                          }
+                          if (widget.item.storageCategory == '실온') {
+                            _provider = context.read<NormalProvider>();
+                          }
+
+                          sqlModel.deleteItem(widget.item.name);
+                          _provider.removeItem(widget.item);
+
                           selectedStorage = selectedItem;
-                          // newItem.storageCategory = storages[selectedItem];
+                          newItem.storageCategory = storages[selectedItem];
                         });
                       },
                       children:
-                      List<Widget>.generate(storages.length, (int index) {
+                          List<Widget>.generate(storages.length, (int index) {
                         return Center(
                           child: Text(
                             storages[index],
@@ -345,7 +369,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                     style: const TextStyle(
                         fontSize: 20.0,
                         color: Colors.black // AppColor.onPrimaryColor,
-                    ),
+                        ),
                   ),
                 ),
               ],
@@ -353,7 +377,6 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
             const SizedBox(
               height: 40,
             ),
-            
 
             const Text(
               '등록 날짜',
@@ -388,7 +411,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                     setState(() {
                       enrollDateTime = newDate;
                       enrollDate =
-                      '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
+                          '${enrollDateTime.year}/${enrollDateTime.month}/${enrollDateTime.day}';
                       newItem.enrollDate =
                           DateFormat('yyyyMMdd').format(enrollDateTime);
                     });
@@ -441,7 +464,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                     setState(() {
                       expireDateTime = newDate;
                       expireDate =
-                      '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
+                          '${expireDateTime.year}/${expireDateTime.month}/${expireDateTime.day}';
                       newItem.expireDate =
                           DateFormat('yyyyMMdd').format(expireDateTime);
                     });
@@ -451,7 +474,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
               // In this example, the date value is formatted manually. You can use intl package
               // to format the value based on user's locale settings.
               child: Text(
-                '${newItem.expireDate.substring(0,4)}/${newItem.expireDate.substring(4,6)}/${newItem.expireDate.substring(6,8)}',
+                '${newItem.expireDate.substring(0, 4)}/${newItem.expireDate.substring(4, 6)}/${newItem.expireDate.substring(6, 8)}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 22.0,
@@ -497,7 +520,7 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                         setState(() {
                           notificationDateTime = newDate;
                           notificationDate =
-                          '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
+                              '${notificationDateTime.year}/${notificationDateTime.month}/${notificationDateTime.day}';
                           newItem.notificationDate = DateFormat('yyyyMMdd')
                               .format(notificationDateTime);
                         });
@@ -639,26 +662,18 @@ class _ItemInfoPageState extends State<ItemInfoPage> {
                     });
                   }
 
-                  if (selectedStorage == 0) {
-                    newItem.storageCategory = "냉장";
-//                    newItem.storageSubCategory = "냉장";
-                  } else if (selectedStorage == 1) {
-                    newItem.storageCategory = "냉동";
-//                    newItem.storageSubCategory = "냉동";
-                  } else if (selectedStorage == 2) {
-                    newItem.storageCategory = "실온";
-//                    newItem.storageSubCategory = "실온";
-                  } else {
-                    setState(() {
-                      newItem.storageCategory = storages[selectedStorage];
-                    });
-                  }
-
                   /* newItem을 데이터 전송 -> LateInitializationError 해결해야 함.*/
 
                   //ControllerProvider _controller =
                   //Provider.of<ControllerProvider>(context, listen: false);
                   //_controller.insertItem(newItem);
+
+                  ControllerProvider _controller =
+                      Provider.of<ControllerProvider>(context, listen: false);
+                  _controller.insertItem(newItem);
+
+                  // var sqlModel = SqliteModel();
+                  sqlModel.insertItem(newItem);
 
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
