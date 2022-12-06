@@ -37,31 +37,26 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    sqlModel.getAllItemList().then(
-            (itemList){
-          for(var item in itemList){
-            if(item.storageCategory == '냉장'){
-              context.read<RefrigeratedProvider>().insertItem(item);
-            }
-            if(item.storageCategory == '냉동'){
-              context.read<FrozenProvider>().insertItem(item);
-            }
-            if(item.storageCategory == '실온'){
-              context.read<NormalProvider>().insertItem(item);
-            }
-          }
+    sqlModel.getAllItemList().then((itemList) {
+      for (var item in itemList) {
+        if (item.storageCategory == '냉장') {
+          context.read<RefrigeratedProvider>().insertItem(item);
         }
-    );
+        if (item.storageCategory == '냉동') {
+          context.read<FrozenProvider>().insertItem(item);
+        }
+        if (item.storageCategory == '실온') {
+          context.read<NormalProvider>().insertItem(item);
+        }
+      }
+    });
 
-    sqlModel.getAllShoppingList().then(
-            (shoppingList){
-          for (var shopping in shoppingList){
-            context.read<ShoppingProvider>().add(shopping.name);
-          }
-        }
-    );
+    sqlModel.getAllShoppingList().then((shoppingList) {
+      for (var shopping in shoppingList) {
+        context.read<ShoppingProvider>().add(shopping.name);
+      }
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -383,8 +378,12 @@ class _HomeState extends State<Home> {
                       print(itemList[categoryList[categoryIndex]]![itemIndex]
                           .image);
                       return GestureDetector(
-                        onTap: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => ItemInfoPage(item: item),));
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ItemInfoPage(item: item),
+                              ));
                         },
                         child: Column(
                           children: [
@@ -408,8 +407,8 @@ class _HomeState extends State<Home> {
                                       color: const Color(0xFFEFF2F4),
                                       image: DecorationImage(
                                         image: AssetImage(
-                                          itemList[categoryList[categoryIndex]]![
-                                                  itemIndex]
+                                          itemList[categoryList[
+                                                  categoryIndex]]![itemIndex]
                                               .image,
                                         ),
                                       ),
@@ -424,7 +423,8 @@ class _HomeState extends State<Home> {
                                     height: 50,
                                     color: const Color(0xFFEFF2F4),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -438,12 +438,7 @@ class _HomeState extends State<Home> {
                                           height: 3,
                                         ),
                                         Text(
-                                          itemList[categoryList[categoryIndex]]![
-                                                          itemIndex]
-                                                      .notificationDate !=
-                                                  null
-                                              ? 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].notificationDate).difference(DateTime.now()).inDays.toString())}'
-                                              : 'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].expireDate).difference(DateTime.now()).inDays.toString())}',
+                                          'D - ${int.parse(DateTime.parse(itemList[categoryList[categoryIndex]]![itemIndex].expireDate).difference(DateTime.now()).inDays.toString())}',
                                           style: TextStyle(
                                               color: Colors.red,
                                               fontWeight: FontWeight.bold),
